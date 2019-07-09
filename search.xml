@@ -102,8 +102,8 @@
         <category>消息中间件</category>
       </categories>
       <tags>
-        <tag>消息中间件</tag>
         <tag>RabbitMQ</tag>
+        <tag>消息中间件</tag>
       </tags>
   </entry>
   <entry>
