@@ -98,12 +98,12 @@
 <meta name="keywords" content="网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从输入url到显示网页发生了什么">
-<meta property="og:url" content="http://www.coding2077.com/2017/06/10/从输入url到显示网页发生了什么/index.html">
+<meta property="og:url" content="https://martin3242017.github.io/2017/06/10/从输入url到显示网页发生了什么/index.html">
 <meta property="og:site_name" content="WANKAI&#39;S BLOG">
 <meta property="og:description" content="在浏览器中输入url到显示网页主要包含两个部分：  网络通信+页面渲染 互联网内各网络设备间的通信都遵循TCP/IP协议，利用TCP/IP协议族进行网络通信时，会通过分层顺序与对方进行通信。分层由高到低分别为：应用层、传输层、网络层、数据链路层。发送端从应用层往下走，接收端从数据链路层网上走 1.浏览器的地址栏输入URL并按下回车 我们常见的RUL是这样的:www.baidu.com,域名通常由3">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://image-static.segmentfault.com/298/263/2982635977-5d208e6c36707_articlex">
-<meta property="og:image" content="http://www.coding2077.com/.com//bVbuK9G">
+<meta property="og:image" content="https://martin3242017.github.io/.io//bVbuK9G">
 <meta property="og:updated_time" content="2019-07-08T08:32:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从输入url到显示网页发生了什么">
@@ -116,7 +116,7 @@
 
   
   
-  <link rel="canonical" href="http://www.coding2077.com/2017/06/10/从输入url到显示网页发生了什么/">
+  <link rel="canonical" href="https://martin3242017.github.io/2017/06/10/从输入url到显示网页发生了什么/">
 
 
 
@@ -382,7 +382,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.coding2077.com/2017/06/10/从输入url到显示网页发生了什么/">
+    <link itemprop="mainEntityOfPage" href="https://martin3242017.github.io/2017/06/10/从输入url到显示网页发生了什么/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WANKAI">
@@ -509,7 +509,7 @@
 <p>1xx：指示信息–表示请求已接收，继续处理。<br>2xx：成功–表示请求已被成功接收、理解、接受。<br>3xx：重定向–要完成请求必须进行更进一步的操作。<br>4xx：客户端错误–请求有语法错误或请求无法实现。<br>5xx：服务器端错误–服务器未能实现合法的请求。</p>
 <p>响应头主要由Cache-Control、 Connection、Date、Pragma等组成。<br>响应体为服务器返回给浏览器的信息，主要由HTML，css，js，图片文件组成。</p>
 <p><strong>6.页面渲染</strong></p>
-<p> 如果说响应的内容是HTML文档的话，就需要浏览器进行解析渲染呈现给用户。整个过程涉及两个方面：解析和渲染。在渲染页面之前，需要构建DOM树和CSSOM树。<br> 在浏览器还没接收到完整的 HTML 文件时，它就开始渲染页面了，在遇到外部链入的脚本标签或样式标签或图片时，会再次发送 HTTP 请求重复上述的步骤。在收到 CSS 文件后会对已经渲染的页面重新渲染，加入它们应有的样式，图片文件加载完立刻显示在相应位置。在这一过程中可能会触发页面的重绘或重排。这里就涉及了两个重要概念：Reflow和Repaint。<br><img src="/.com//bVbuK9G" alt="页面渲染"></p>
+<p> 如果说响应的内容是HTML文档的话，就需要浏览器进行解析渲染呈现给用户。整个过程涉及两个方面：解析和渲染。在渲染页面之前，需要构建DOM树和CSSOM树。<br> 在浏览器还没接收到完整的 HTML 文件时，它就开始渲染页面了，在遇到外部链入的脚本标签或样式标签或图片时，会再次发送 HTTP 请求重复上述的步骤。在收到 CSS 文件后会对已经渲染的页面重新渲染，加入它们应有的样式，图片文件加载完立刻显示在相应位置。在这一过程中可能会触发页面的重绘或重排。这里就涉及了两个重要概念：Reflow和Repaint。<br><img src="/.io//bVbuK9G" alt="页面渲染"></p>
 <p>Reflow，也称作Layout，中文叫回流，一般意味着元素的内容、结构、位置或尺寸发生了变化，需要重新计算样式和渲染树，这个过程称为Reflow。<br>Repaint，中文重绘，意味着元素发生的改变只是影响了元素的一些外观之类的时候（例如，背景色，边框颜色，文字颜色等），此时只需要应用新样式绘制这个元素就OK了，这个过程称为Repaint。</p>
 <p>所以说Reflow的成本比Repaint的成本高得多的多。DOM树里的每个结点都会有reflow方法，一个结点的reflow很有可能导致子结点，甚至父点以及同级结点的reflow。</p>
 <p><strong>7.关闭TCP连接或继续保持连接</strong></p>
