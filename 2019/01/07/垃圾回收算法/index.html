@@ -94,18 +94,21 @@
 
 
 
-  <meta name="description" content="垃圾回收算法有很多种，目前商业虚拟机常用的是分代回收算法，但最初并不是用这个算法的我们来看一下垃圾收集算法的背景知识 标记-清除算法最基础的垃圾回收算法，顾名思义，整个回收过程分两步：1.逐个标记2.统一回收该算法可以算是后来所有垃圾回收算法的基石（后续所有算法都有标记和清除这两步，只不过策略上有了一些优化）这里值得一说的是这个标记 虚拟机是如何判断一个对象是“活”还是“死”？因此又引出两种标记算">
+  <meta name="description" content="垃圾回收算法垃圾回收算法有很多种，目前商业虚拟机常用的是分代回收算法，最初并不是用这个算法的所以需要先了解一下垃圾收集算法的背景知识： 要讨论垃圾回收算法首先得知道虚拟机是如何判断一个对象是“活”还是“死”的 这里涉及到 两种标记算法：1.引用计数算法引用计数算法非常简单且高效，当一个对象被引用一次则+1不再被引用则-1，当计数为0就是不可能在被使用的对象了，但是这种算法存在一个致命的缺陷：两个对">
 <meta name="keywords" content="JVM,垃圾回收">
 <meta property="og:type" content="article">
 <meta property="og:title" content="垃圾回收算法">
 <meta property="og:url" content="http://www.coding2077.com/2019/01/07/垃圾回收算法/index.html">
 <meta property="og:site_name" content="WANKAI&#39;S BLOG">
-<meta property="og:description" content="垃圾回收算法有很多种，目前商业虚拟机常用的是分代回收算法，但最初并不是用这个算法的我们来看一下垃圾收集算法的背景知识 标记-清除算法最基础的垃圾回收算法，顾名思义，整个回收过程分两步：1.逐个标记2.统一回收该算法可以算是后来所有垃圾回收算法的基石（后续所有算法都有标记和清除这两步，只不过策略上有了一些优化）这里值得一说的是这个标记 虚拟机是如何判断一个对象是“活”还是“死”？因此又引出两种标记算">
+<meta property="og:description" content="垃圾回收算法垃圾回收算法有很多种，目前商业虚拟机常用的是分代回收算法，最初并不是用这个算法的所以需要先了解一下垃圾收集算法的背景知识： 要讨论垃圾回收算法首先得知道虚拟机是如何判断一个对象是“活”还是“死”的 这里涉及到 两种标记算法：1.引用计数算法引用计数算法非常简单且高效，当一个对象被引用一次则+1不再被引用则-1，当计数为0就是不可能在被使用的对象了，但是这种算法存在一个致命的缺陷：两个对">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-08T08:36:05.000Z">
+<meta property="og:image" content="http://p99.pstatp.com/large/pgc-image/1540956173620dd72db9e78">
+<meta property="og:image" content="http://p3.pstatp.com/large/pgc-image/15409744838080b79590351">
+<meta property="og:updated_time" content="2019-07-09T10:23:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="垃圾回收算法">
-<meta name="twitter:description" content="垃圾回收算法有很多种，目前商业虚拟机常用的是分代回收算法，但最初并不是用这个算法的我们来看一下垃圾收集算法的背景知识 标记-清除算法最基础的垃圾回收算法，顾名思义，整个回收过程分两步：1.逐个标记2.统一回收该算法可以算是后来所有垃圾回收算法的基石（后续所有算法都有标记和清除这两步，只不过策略上有了一些优化）这里值得一说的是这个标记 虚拟机是如何判断一个对象是“活”还是“死”？因此又引出两种标记算">
+<meta name="twitter:description" content="垃圾回收算法垃圾回收算法有很多种，目前商业虚拟机常用的是分代回收算法，最初并不是用这个算法的所以需要先了解一下垃圾收集算法的背景知识： 要讨论垃圾回收算法首先得知道虚拟机是如何判断一个对象是“活”还是“死”的 这里涉及到 两种标记算法：1.引用计数算法引用计数算法非常简单且高效，当一个对象被引用一次则+1不再被引用则-1，当计数为0就是不可能在被使用的对象了，但是这种算法存在一个致命的缺陷：两个对">
+<meta name="twitter:image" content="http://p99.pstatp.com/large/pgc-image/1540956173620dd72db9e78">
 
 
 
@@ -482,12 +485,30 @@
       
 
       
-        <p>垃圾回收算法有很多种，目前商业虚拟机常用的是<strong>分代回收算法</strong>，但最初并不是用这个算法的<br>我们来看一下垃圾收集算法的背景知识</p>
-<p><strong>标记-清除算法</strong><br>最基础的垃圾回收算法，顾名思义，整个回收过程分两步：<br>1.逐个标记<br>2.统一回收<br>该算法可以算是后来所有垃圾回收算法的基石（后续所有算法都有标记和清除这两步，只不过策略上有了一些优化）<br>这里值得一说的是这个<strong>标记</strong> 虚拟机是如何判断一个对象是“活”还是“死”？<br>因此又引出两种标记算法：<br><strong>1.引用计数算法</strong><br>引用计数算法非常简单且高效，当一个对象被引用一次则+1不再被引用则-1，当计数为0就是不可能在被使用的对象了，但是这种算法存在一个致命的缺陷：两个对象相互引用对方呢？所以，这种算法肯定不能用，pass掉<br><strong>2.可达性分析算法</strong><br>目前的标记算法主流实现都是用的可达性分析算法。就是以一个叫GC Roots的对象为起点，通过引用链向下搜索，如果一个对象通过引用链无法与GC Roots对象链接，就视为可回收对象，上面说的那种相互引用的情况自然也解决了。<br><strong>扩展：</strong>即使是可达性分析中不可达的对象也并不是非死不可，只是暂处‘缓刑’，真正宣告一个对象死亡至少还要经历两次标记过程：当被判定不可达之后那么他被第一次标记并进行筛选，若对象没有覆盖finalize()方法或者finalize()方法已经被虚拟机调用过就‘放生’，如果被判定需要执行finalize()方法就会被放到一个叫F-Queue的队列中进行第二次标记对象被再次被引用就会放生，否则就会被回收。<br><strong>finalize()方法</strong><br>finalize()是Object中的方法，当垃圾回收器将要回收对象所占内存之前被调用，即当一个对象被虚拟机宣告死亡时会先调用它finalize()方法，让此对象处理它生前的最后事情（这个对象可以趁这个时机挣脱死亡的命运）</p>
-<p>说到这里敏锐的小伙伴可能以及察觉到了，上面都在说<strong>引用</strong>所以引用的定义就显得尤为关键了<br>JDK1.2后Java对引用的概念进行了扩充，将引用分为：<strong>强引用、软引用、弱引用、虚引用</strong>四种<br>    强引用：用处很大，无论如何都不会被GC回收<br>    软引用：有一定用处但不大，内存实在不够才会在内存溢出之前回收掉<br>    弱引用：比软引用强度更弱一些，GC会让它多活一轮，下一轮就回收<br>    虚引用：必回收，唯一作用就是被GC回收时会收到一个系统通知</p>
-<p><strong>复制算法</strong><br>前面说的标记-清除算法其实两个过程效率都很低，并且回收之后内存被‘抠出很多洞’内存碎片化严重，此时如果过来了一个较大的对象，找不到一整块连续的内存空间就不得不提前触发另外一次GC回收。<br>而复制算法则选择将内存一分为二每次只使用其中一半，满了之后将存活的对象整齐复制到另一块干净的内存上，将剩下的碎片一次性擦除，简单高效。但是也存在一个很大的缺陷，那就是可用内存变为原来的一半了。</p>
-<p><strong>分代收集算法</strong><br>事实上后来IBM公司经过研究发现，98%的对象都是‘朝生夕死’，所以并不需要1:1的划分内存，即我们现在常用的分代收集算法：<br>根据对象的存活周期将内存划分为两块，分别为新生代和老年代，然后对各代采用不同的回收算法，在新生代中大部分是‘朝生夕死’的对象，继续将新生代8:2划分为Eden区和survival区，其中survival区1:1分成s0和s1两块，采用之前说的复制算法，减少内存碎片的产生。<br>新生代满了会进行一次minor GC ，minor GC 存活的对象转移到survival区，survival区满了就会将survival区进行回收，存活的survival区对象复制到另外一块survival区中，并且survival区对象每存活一轮年龄+1当到达一定年龄就会前往老年代。</p>
-<p><strong>扩展01：JVM何时会进行全局GC</strong><br>    01.手动调用System.GC 但也不是立即调用<br>    02.老年代空间不足<br>    03.永生代空间不足<br>    04.计算得知新生代前往老年代平均值大于老年代剩余空间</p>
+        <h1 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h1><p>垃圾回收算法有很多种，目前商业虚拟机常用的是<strong>分代回收算法</strong>，最初并不是用这个算法的<br>所以需要先了解一下垃圾收集算法的背景知识：</p>
+<p>要讨论垃圾回收算法首先得知道虚拟机是如何判断一个对象是“活”还是“死”的 这里涉及到</p>
+<h1 id="两种标记算法："><a href="#两种标记算法：" class="headerlink" title="两种标记算法："></a>两种标记算法：</h1><h2 id="1-引用计数算法"><a href="#1-引用计数算法" class="headerlink" title="1.引用计数算法"></a>1.引用计数算法</h2><p>引用计数算法非常简单且高效，当一个对象被引用一次则+1不再被引用则-1，当计数为0就是不可能在被使用的对象了，但是这种算法存在一个致命的缺陷：两个对象相互引用对方呢？</p>
+<h2 id="2-可达性分析算法"><a href="#2-可达性分析算法" class="headerlink" title="2.可达性分析算法"></a>2.可达性分析算法</h2><p>目前的标记算法主流实现都是用的可达性分析算法。就是以一个叫GC Roots的对象为起点，通过引用链向下搜索，如果一个对象通过引用链无法与GC Roots对象链接，就视为可回收对象，上面说的那种相互引用的情况自然也解决了。</p>
+<h3 id="扩展："><a href="#扩展：" class="headerlink" title="扩展："></a>扩展：</h3><p>即使是可达性分析中不可达的对象也并不是非死不可，只是暂处‘缓刑’，真正宣告一个对象死亡至少还要经历两次标记过程：当被判定不可达之后那么他被第一次标记并进行筛选，若对象没有覆盖finalize()方法或者finalize()方法已经被虚拟机调用过就‘放生’，如果被判定需要执行finalize()方法就会被放到一个叫F-Queue的队列中进行第二次标记对象被再次被引用就会放生，否则就会被回收。</p>
+<h3 id="finalize-方法"><a href="#finalize-方法" class="headerlink" title="finalize()方法"></a>finalize()方法</h3><p>finalize()是Object中的方法，当垃圾回收器将要回收对象所占内存之前被调用，即当一个对象被虚拟机宣告死亡时会先调用它finalize()方法，让此对象处理它生前的最后事情（这个对象可以趁这个时机挣脱死亡的命运）</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>说到这里敏锐的小伙伴可能以及察觉到了，上面都在说<strong>引用</strong>所以引用的定义就显得尤为关键了<br>JDK1.2后Java对引用的概念进行了扩充，将引用分为：<strong>强引用、软引用、弱引用、虚引用</strong>四种<br>    强引用：用处很大，无论如何都不会被GC回收<br>    软引用：有一定用处但不大，内存实在不够才会在内存溢出之前回收掉<br>    弱引用：比软引用强度更弱一些，GC会让它多活一轮，下一轮就回收<br>    虚引用：必回收，唯一作用就是被GC回收时会收到一个系统通知</p>
+<h1 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h1><p>最基础的垃圾回收算法，顾名思义，整个回收过程分两步：<br>1.逐个标记<br>2.统一回收<br>该算法可以算是后来所有垃圾回收算法的基石（后续所有算法都有标记和清除这两步，只不过策略上有了一些优化）</p>
+<h1 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h1><p>前面说的标记-清除算法其实两个过程效率都很低，并且回收之后内存被‘抠出很多洞’内存碎片化严重，此时如果过来了一个较大的对象，找不到一整块连续的内存空间就不得不提前触发另外一次GC回收。<br>而复制算法则选择将内存一分为二每次只使用其中一半，满了之后将存活的对象整齐复制到另一块干净的内存上，将剩下的碎片一次性擦除，简单高效。但是也存在一个很大的缺陷，那就是可用内存变为原来的一半了。</p>
+<h1 id="标记整理算法"><a href="#标记整理算法" class="headerlink" title="标记整理算法"></a>标记整理算法</h1><p>复制算法的高效性是建立在存活对象少、垃圾对象多的前提下的。<br>这种情况在新生代经常发生，但是在老年代更常见的情况是大部分对象都是存活对象。如果依然使用复制算法，由于存活的对象较多，复制的成本也将很高。<br>标记-整理算法是一种老年代的回收算法，它在标记-清除算法的基础上做了一些优化。<br><img src="http://p99.pstatp.com/large/pgc-image/1540956173620dd72db9e78"><br>首先也需要从根节点开始对所有可达对象做一次标记，但之后，它并不简单地清理未标记的对象，而是将所有的存活对象压缩到内存的一端。之后，清理边界外所有的空间。这种方法既避免了碎片的产生，又不需要两块相同的内存空间，因此，其性价比比较高。 </p>
+<h1 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h1><h2 id="1-年轻代：复制算法"><a href="#1-年轻代：复制算法" class="headerlink" title="1.年轻代：复制算法"></a>1.年轻代：复制算法</h2><p>事实上后来IBM公司经过研究发现，98%的对象都是‘朝生夕死’，所以并不需要1:1的划分内存，即我们现在常用的分代收集算法：<br>根据对象的存活周期将内存划分为两块，分别为新生代和老年代，然后对各代采用不同的回收算法，在新生代中大部分是‘朝生夕死’的对象，继续将新生代8:2划分为Eden区和survival区，其中survival区1:1分成s0和s1两块，采用之前说的复制算法，减少内存碎片的产生。<br>新生代满了会进行一次minor GC ，minor GC 存活的对象转移到survival区，survival区满了就会将survival区进行回收，存活的survival区对象复制到另外一块survival区中，并且survival区对象每存活一轮年龄+1当到达一定年龄就会前往老年代。</p>
+<h2 id="2-年老代：标记-清除或标记-整理算法"><a href="#2-年老代：标记-清除或标记-整理算法" class="headerlink" title="2.年老代：标记-清除或标记-整理算法"></a>2.年老代：标记-清除或标记-整理算法</h2><p>当老年代内存满时触发Major GC即Full GC，Full GC发生频率比较低，老年代对象存活时间比较长，存活率标记高。</p>
+<p>以上这种年轻代与年老代分别采用不同回收算法的方式称为”分代收集算法”，这也是当下企业使用的一种方式</p>
+<h1 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h1><p>年轻代分为Eden区和survivor区（两块儿：from和to），且Eden:from:to==8:1:1。</p>
+<img src="http://p3.pstatp.com/large/pgc-image/15409744838080b79590351">
+
+<p>1）新产生的对象优先分配在Eden区（除非配置了-XX:PretenureSizeThreshold，大于该值的对象会直接进入年老代）；</p>
+<p>2）当Eden区满了或放不下了，这时候其中存活的对象会复制到from区。</p>
+<pre><code>这里，需要注意的是，如果存活下来的对象from区都放不下，则这些存活下来的对象全部进入年老代。之后Eden区的内存全部回收掉。</code></pre><p>3）之后产生的对象继续分配在Eden区，当Eden区又满了或放不下了，这时候将会把Eden区和from区存活下来的对象复制到to区（同理，如果存活下来的对象to区都放不下，则这些存活下来的对象全部进入年老代），之后回收掉Eden区和from区的所有内存。</p>
+<p>4）如上这样，会有很多对象会被复制很多次（每复制一次，对象的年龄就+1），默认情况下，当对象被复制了15次（这个次数可以通过-XX:MaxTenuringThreshold来配置），就会进入年老代了。</p>
+<p>5）当年老代满了或者存放不下将要进入年老代的存活对象的时候，就会发生一次Full GC（这个是我们最需要减少的，因为耗时很严重）。 </p>
+<h1 id="垃圾回收的两种类型：Minor-GC-和-Full-GC。"><a href="#垃圾回收的两种类型：Minor-GC-和-Full-GC。" class="headerlink" title="垃圾回收的两种类型：Minor GC 和 Full GC。"></a>垃圾回收的两种类型：Minor GC 和 Full GC。</h1><h2 id="1-Minor-GC"><a href="#1-Minor-GC" class="headerlink" title="1.Minor GC"></a>1.Minor GC</h2><p>对新生代进行回收，不会影响到年老代。因为新生代的 Java 对象大多死亡频繁，所以 Minor GC 非常频繁，一般在这里使用速度快、效率高的算法，使垃圾回收能尽快完成。</p>
+<h2 id="2-Full-GC"><a href="#2-Full-GC" class="headerlink" title="2.Full GC"></a>2.Full GC</h2><p>也叫Major GC，对整个堆进行回收，包括新生代和老年代。由于Full GC需要对整个堆进行回收，所以比Minor<br>GC要慢，因此应该尽可能减少Full GC的次数，导致Full<br>GC的原因包括：老年代被写满、永久代（Perm）被写满和System.gc()被显式调用等。 </p>
+<h1 id="最后："><a href="#最后：" class="headerlink" title="最后："></a>最后：</h1><p><strong>扩展01：JVM何时会进行全局GC</strong><br>    01.手动调用System.GC 但也不是立即调用<br>    02.老年代空间不足<br>    03.永生代空间不足<br>    04.计算得知新生代前往老年代平均值大于老年代剩余空间</p>
 <p><strong>扩展02：在压力测试时，发现FullGC频率很高，如何解决</strong><br>    01.观察GC日志，判断是否有内存泄漏，或者存在内部不合理点<br>    02.调整JVM参数，如新生代、老年代大小 S0+S1大小比例，选用不同的立即回收器<br>    03.Dump内存，做进一步的对象分析<br>    04.压测脚本的编写，性能问题解决前可以发现问题，并对解决方案进行验证</p>
 
       
@@ -586,8 +607,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -604,7 +634,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -643,7 +673,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -716,7 +748,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -785,6 +821,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收算法"><span class="nav-number">1.</span> <span class="nav-text">垃圾回收算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#两种标记算法："><span class="nav-number">2.</span> <span class="nav-text">两种标记算法：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引用计数算法"><span class="nav-number">2.1.</span> <span class="nav-text">1.引用计数算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-可达性分析算法"><span class="nav-number">2.2.</span> <span class="nav-text">2.可达性分析算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展："><span class="nav-number">2.2.1.</span> <span class="nav-text">扩展：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#finalize-方法"><span class="nav-number">2.2.2.</span> <span class="nav-text">finalize()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-number">2.2.3.</span> <span class="nav-text">引用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标记-清除算法"><span class="nav-number">3.</span> <span class="nav-text">标记-清除算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复制算法"><span class="nav-number">4.</span> <span class="nav-text">复制算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标记整理算法"><span class="nav-number">5.</span> <span class="nav-text">标记整理算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分代收集算法"><span class="nav-number">6.</span> <span class="nav-text">分代收集算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-年轻代：复制算法"><span class="nav-number">6.1.</span> <span class="nav-text">1.年轻代：复制算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-年老代：标记-清除或标记-整理算法"><span class="nav-number">6.2.</span> <span class="nav-text">2.年老代：标记-清除或标记-整理算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收机制"><span class="nav-number">7.</span> <span class="nav-text">垃圾回收机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收的两种类型：Minor-GC-和-Full-GC。"><span class="nav-number">8.</span> <span class="nav-text">垃圾回收的两种类型：Minor GC 和 Full GC。</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Minor-GC"><span class="nav-number">8.1.</span> <span class="nav-text">1.Minor GC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Full-GC"><span class="nav-number">8.2.</span> <span class="nav-text">2.Full GC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最后："><span class="nav-number">9.</span> <span class="nav-text">最后：</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
