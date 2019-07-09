@@ -94,20 +94,18 @@
 
 
 
-  <meta name="description" content="1234567new ThreadPoolExecutor(int corePoolSize,                       int maximumPoolSize,                       long keepAliveTime,                       TimeUnit unit,                       Blocki">
+  <meta name="description" content="创建线程池时通过设置线程池各项参数可以创建性能各异的线程池 1234567new ThreadPoolExecutor(int corePoolSize,                       int maximumPoolSize,                       long keepAliveTime,                       TimeUnit unit,">
 <meta name="keywords" content="多线程,线程池">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java四种常用线程池">
-<meta property="og:url" content="https://martin3242017.github.io/2018/03/01/四种常用线程池/index.html">
+<meta property="og:url" content="https://martin3242017.github.io/2018/03/01/Java四种常用线程池/index.html">
 <meta property="og:site_name" content="WANKAI&#39;S BLOG">
-<meta property="og:description" content="1234567new ThreadPoolExecutor(int corePoolSize,                       int maximumPoolSize,                       long keepAliveTime,                       TimeUnit unit,                       Blocki">
+<meta property="og:description" content="创建线程池时通过设置线程池各项参数可以创建性能各异的线程池 1234567new ThreadPoolExecutor(int corePoolSize,                       int maximumPoolSize,                       long keepAliveTime,                       TimeUnit unit,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://martin3242017.github.io/.io//">
-<meta property="og:updated_time" content="2019-07-09T15:43:10.000Z">
+<meta property="og:updated_time" content="2019-07-09T16:10:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java四种常用线程池">
-<meta name="twitter:description" content="1234567new ThreadPoolExecutor(int corePoolSize,                       int maximumPoolSize,                       long keepAliveTime,                       TimeUnit unit,                       Blocki">
-<meta name="twitter:image" content="https://martin3242017.github.io/.io//">
+<meta name="twitter:description" content="创建线程池时通过设置线程池各项参数可以创建性能各异的线程池 1234567new ThreadPoolExecutor(int corePoolSize,                       int maximumPoolSize,                       long keepAliveTime,                       TimeUnit unit,">
 
 
 
@@ -115,7 +113,7 @@
 
   
   
-  <link rel="canonical" href="https://martin3242017.github.io/2018/03/01/四种常用线程池/">
+  <link rel="canonical" href="https://martin3242017.github.io/2018/03/01/Java四种常用线程池/">
 
 
 
@@ -381,7 +379,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://martin3242017.github.io/2018/03/01/四种常用线程池/">
+    <link itemprop="mainEntityOfPage" href="https://martin3242017.github.io/2018/03/01/Java四种常用线程池/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WANKAI">
@@ -484,11 +482,10 @@
       
 
       
-        <img src="/.io// ">
-
+        <p>创建线程池时通过设置线程池各项参数可以创建性能各异的线程池</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> ThreadPoolExecutor(<span class="keyword">int</span> corePoolSize,</span><br><span class="line">                       <span class="keyword">int</span> maximumPoolSize,</span><br><span class="line">                       <span class="keyword">long</span> keepAliveTime,</span><br><span class="line">                       TimeUnit unit,</span><br><span class="line">                       BlockingQueue&lt;Runnable&gt; workQueue,</span><br><span class="line">                       ThreadFactory threadFactory,</span><br><span class="line">                       RejectedExecutionHandler handler)</span><br></pre></td></tr></table></figure>
 
-<p>创建线程池时通过设置线程池各项参数可以创建性能各异的线程池，但官方也给我们设置好了四种常用的线程池，可以直接调用</p>
+<p>但官方也给我们设置好了四种常用的线程池，可以直接调用</p>
 <p>Java通过Executors提供四种线程池，分别为：<br>    newCachedThreadPool  可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。<br>    newFixedThreadPool  定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。<br>    newScheduledThreadPool  定长线程池，支持定时及周期性任务执行。<br>    newSingleThreadExecutor  单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。</p>
 <h1 id="1-newCachedThreadPool-可缓存线程池"><a href="#1-newCachedThreadPool-可缓存线程池" class="headerlink" title="1. newCachedThreadPool 可缓存线程池"></a>1. newCachedThreadPool 可缓存线程池</h1><p>创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。<br>示例代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> test;  </span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;  </span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPoolExecutorTest</span> </span>&#123;  </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </span><br><span class="line">  ExecutorService cachedThreadPool = Executors.newCachedThreadPool();  </span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;  </span><br><span class="line">   <span class="keyword">final</span> <span class="keyword">int</span> index = i;  </span><br><span class="line">   <span class="keyword">try</span> &#123;  </span><br><span class="line">    Thread.sleep(index * <span class="number">1000</span>);  </span><br><span class="line">   &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;  </span><br><span class="line">    e.printStackTrace();  </span><br><span class="line">   &#125;  </span><br><span class="line">   cachedThreadPool.execute(<span class="keyword">new</span> Runnable() &#123;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">     System.out.println(index);  </span><br><span class="line">    &#125;  </span><br><span class="line">   &#125;);  </span><br><span class="line">  &#125;  </span><br><span class="line"> &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
