@@ -33,8 +33,8 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>VisualVM</tag>
         <tag>Java</tag>
+        <tag>VisualVM</tag>
         <tag>性能调优</tag>
       </tags>
   </entry>
@@ -60,6 +60,19 @@
       <tags>
         <tag>Java</tag>
         <tag>锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[HashMap为什么不是线程安全的？]]></title>
+    <url>%2F2018%2F12%2F13%2FHashMap%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%EF%BC%9F%2F</url>
+    <content type="text"><![CDATA[当Hashmap的容量不够时，需要扩容扩容包含扩容和ReHash两个步骤，ReHash在并发的情况下可能会形成链表环。具体细节参考：程序员小灰(https://mp.weixin.qq.com/s/dzNq50zBQ4iDrOAhM4a70A)]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>Java</tag>
+        <tag>HashMap</tag>
       </tags>
   </entry>
   <entry>
@@ -215,6 +228,19 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[JDK-JRE-JVM对比]]></title>
+    <url>%2F2016%2F04%2F01%2FJDK-JRE-JVM%E5%AF%B9%E6%AF%94%2F</url>
+    <content type="text"><![CDATA[JDK（Java Development Kit）是针对Java开发员的产品，是整个Java的核心，包括了Java运行环境JRE、Java工具和Java基础类库。Java Runtime Environment（JRE）是运行JAVA程序所必须的环境的集合，包含JVM标准实现及Java核心类库。JVM是Java Virtual Machine（Java虚拟机）的缩写，是整个java实现跨平台的最核心的部分，能够运行以Java语言写作的软件程序。 JDK包括了Java运行环境JRE 、一堆Java工具（javac/java/jdb等）和Java基础的类库（即Java API 包括rt.jar）。 rt.jar：Java基础类库，也就是Java doc里面看到的所有的类的class文件。 tools.jar：是系统用来编译一个类的时候用到的，即执行javac的时候用到。 dt.jar：dt.jar是关于运行环境的类库，主要是swing包。JREJava运行环境，并不是一个开发环境，所以没有包含任何开发工具（如编译器和调试器），只是针对于使用Java程序的用户。JRE中包含了 JVM 、runtime class libraries和Java application launcher，这些是运行Java程序的必要组件。 JVM就是我们常说的java虚拟机，它是整个java实现跨平台的最核心的部分，所有的java程序会首先被编译为.class的类文件，这种类文件可以在虚拟机上执行。 也就是说class并不直接与机器的操作系统相对应，而是经过虚拟机间接与操作系统交互，由虚拟机将程序解释给本地系统执行。 只有JVM还不能成class的执行，因为在解释class的时候JVM需要调用解释所需要的类库lib，而jre包含lib类库。 JVM屏蔽了与具体操作系统平台相关的信息，使得Java程序只需生成在Java虚拟机上运行的目标代码（字节码），就可以在多种平台上不加修改地运行。]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>JDK</tag>
+        <tag>JRE</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[《深入理解计算机系统》 day01]]></title>
     <url>%2F2015%2F12%2F20%2F%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%8B%20day01%2F</url>
     <content type="text"><![CDATA[预处理阶段预处理器（cpp）识别以#字符开头的指令 修改源程序，比如#iclude&lt;stdio.h&gt;告诉预处理器读取系统头文件stdio.h的内容并把它插入程序文本中就得到另一个C程序，以 .i 为文件扩展名 编译阶段编译器（ccl）将hello.i翻译成文本文件hello.s，它包含一个汇编程序，每条语句都以一种文本格式描述了一条低级的机器语言指令 汇编阶段接下来汇编器（as）将hello.s翻译成机器语言指令，并将结果打包在一个二进制文件 hello.o 中 链接阶段将程序中需要用到的函数，例如printf，从printf.o包中用链接器（ld）合并到hello.o程序中得到一个hello文件，加载到内存中交给系统执行。]]></content>
@@ -270,8 +296,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>冒泡排序</tag>
         <tag>算法</tag>
+        <tag>冒泡排序</tag>
       </tags>
   </entry>
   <entry>
