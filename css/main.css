@@ -1808,7 +1808,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff523b;
+  background: #faba9c;
 }
 .feed-link,
 .chat {
@@ -2001,7 +2001,7 @@ pre .javascript .function {
 .with-love {
   display: inline-block;
   margin: 0 5px;
-  color: #f00;
+  color: #ff2a2a;
 }
 .powered-by,
 .theme-info {
