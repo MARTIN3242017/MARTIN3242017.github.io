@@ -599,9 +599,9 @@
 
       <h2 class="post-title">
         
-          <a class="post-title-link" href="/2019/01/07/垃圾回收算法/" itemprop="url">
+          <a class="post-title-link" href="/2019/01/07/Java锁 总结/" itemprop="url">
             
-              <span itemprop="name">垃圾回收算法</span>
+              <span itemprop="name">Java锁 总结</span>
             
           </a>
         
@@ -634,9 +634,9 @@
 
       <h2 class="post-title">
         
-          <a class="post-title-link" href="/2019/01/07/Java锁 总结/" itemprop="url">
+          <a class="post-title-link" href="/2019/01/07/垃圾回收算法/" itemprop="url">
             
-              <span itemprop="name">Java锁 总结</span>
+              <span itemprop="name">垃圾回收算法</span>
             
           </a>
         
@@ -1087,6 +1087,32 @@
   
 
   
+  
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'oBFm7m6QAwRY1Bz83loQHSyK-gzGzoHsz',
+    appKey: '5gYPNWHnqnvMKQXgPboTpOcD',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
 
 
 

@@ -450,6 +450,18 @@
           
             
             
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/01/07/垃圾回收算法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/01/07/垃圾回收算法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -551,8 +563,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/07/Java锁 总结/" rel="next" title="Java锁 总结">
-                <i class="fa fa-chevron-left"></i> Java锁 总结
+              <a href="/2018/12/13/HashMap为什么不是线程安全的？/" rel="next" title="HashMap为什么不是线程安全的？">
+                <i class="fa fa-chevron-left"></i> HashMap为什么不是线程安全的？
               </a>
             
           </div>
@@ -561,8 +573,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/01/Java性能调优-利用VisualVM进行性能分析/" rel="prev" title="Java性能调优：利用VisualVM进行性能分析">
-                Java性能调优：利用VisualVM进行性能分析 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/01/07/Java锁 总结/" rel="prev" title="Java锁 总结">
+                Java锁 总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -584,6 +596,10 @@
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
 
   
 
@@ -1038,6 +1054,32 @@
   
 
   
+  
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'oBFm7m6QAwRY1Bz83loQHSyK-gzGzoHsz',
+    appKey: '5gYPNWHnqnvMKQXgPboTpOcD',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
 
 
   

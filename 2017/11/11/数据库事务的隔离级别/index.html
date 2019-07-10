@@ -449,6 +449,18 @@
           
             
             
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2017/11/11/数据库事务的隔离级别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/11/11/数据库事务的隔离级别/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -583,8 +595,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/01/让 hexo 博客在后台跑起来/" rel="prev" title="让 hexo 博客在后台跑起来">
-                让 hexo 博客在后台跑起来 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/01/后端程序员必备的Linux基础知识/" rel="prev" title="后端程序员必备的Linux基础知识">
+                后端程序员必备的Linux基础知识 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -606,6 +618,10 @@
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
 
   
 
@@ -1034,6 +1050,32 @@
   
 
   
+  
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'oBFm7m6QAwRY1Bz83loQHSyK-gzGzoHsz',
+    appKey: '5gYPNWHnqnvMKQXgPboTpOcD',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
 
 
   
