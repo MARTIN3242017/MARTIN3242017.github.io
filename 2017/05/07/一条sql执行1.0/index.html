@@ -94,24 +94,20 @@
 
 
 
-  <meta name="description" content="下面是我补充的一些内容  为什么索引能提高查询速度 以下内容整理自： 地址： https://juejin.im/post/5b55b842f265da0f9e589e79 作者 ：Java3y  先从 MySQL 的基本存储结构说起MySQL的基本存储结构是页(记录都存在页里边)：    各个数据页可以组成一个双向链表 每个数据页中的记录又可以组成一个单向链表 每个数据页都会为存储在它里边儿">
-<meta name="keywords" content="MySQL,数据库">
+  <meta name="description" content="一条SQL语句在执行时，其底层经历了哪些过程？大体来讲，MySQL 可以分为 Server 层和存储引擎层两部分（当然，首先还得经过客户端）多个存储引擎共用一个server层 因此所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等    建表时如果不指定存储引擎则默认使用的是InnoDB存储引擎（MySQL5.5.5版本以前默认使用的是MyISAM引擎 TODO:二者区别后续讲解）">
+<meta name="keywords" content="MySQL,设计模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="为什么索引能够提升数据查询效率">
-<meta property="og:url" content="https://martin3242017.github.io/2018/05/05/为什么索引能够提升数据查询效率/index.html">
+<meta property="og:title" content="一条SQL语句在执行时，其底层经历了哪些过程？">
+<meta property="og:url" content="https://martin3242017.github.io/2017/05/07/一条sql执行1.0/index.html">
 <meta property="og:site_name" content="WANKAI&#39;S BLOG">
-<meta property="og:description" content="下面是我补充的一些内容  为什么索引能提高查询速度 以下内容整理自： 地址： https://juejin.im/post/5b55b842f265da0f9e589e79 作者 ：Java3y  先从 MySQL 的基本存储结构说起MySQL的基本存储结构是页(记录都存在页里边)：    各个数据页可以组成一个双向链表 每个数据页中的记录又可以组成一个单向链表 每个数据页都会为存储在它里边儿">
+<meta property="og:description" content="一条SQL语句在执行时，其底层经历了哪些过程？大体来讲，MySQL 可以分为 Server 层和存储引擎层两部分（当然，首先还得经过客户端）多个存储引擎共用一个server层 因此所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等    建表时如果不指定存储引擎则默认使用的是InnoDB存储引擎（MySQL5.5.5版本以前默认使用的是MyISAM引擎 TODO:二者区别后续讲解）">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/70973487.jpg">
-<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/28559421.jpg">
-<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/82053134.jpg">
-<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/5373082.jpg">
-<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/89338047.jpg">
-<meta property="og:updated_time" content="2019-07-12T07:58:25.000Z">
+<meta property="og:image" content="https://image-static.segmentfault.com/365/592/3655924384-5cce7fc25c25d_articlex">
+<meta property="og:updated_time" content="2019-07-12T08:17:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="为什么索引能够提升数据查询效率">
-<meta name="twitter:description" content="下面是我补充的一些内容  为什么索引能提高查询速度 以下内容整理自： 地址： https://juejin.im/post/5b55b842f265da0f9e589e79 作者 ：Java3y  先从 MySQL 的基本存储结构说起MySQL的基本存储结构是页(记录都存在页里边)：    各个数据页可以组成一个双向链表 每个数据页中的记录又可以组成一个单向链表 每个数据页都会为存储在它里边儿">
-<meta name="twitter:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/70973487.jpg">
+<meta name="twitter:title" content="一条SQL语句在执行时，其底层经历了哪些过程？">
+<meta name="twitter:description" content="一条SQL语句在执行时，其底层经历了哪些过程？大体来讲，MySQL 可以分为 Server 层和存储引擎层两部分（当然，首先还得经过客户端）多个存储引擎共用一个server层 因此所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等    建表时如果不指定存储引擎则默认使用的是InnoDB存储引擎（MySQL5.5.5版本以前默认使用的是MyISAM引擎 TODO:二者区别后续讲解）">
+<meta name="twitter:image" content="https://image-static.segmentfault.com/365/592/3655924384-5cce7fc25c25d_articlex">
 
 
 
@@ -119,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="https://martin3242017.github.io/2018/05/05/为什么索引能够提升数据查询效率/">
+  <link rel="canonical" href="https://martin3242017.github.io/2017/05/07/一条sql执行1.0/">
 
 
 
@@ -129,7 +125,7 @@
   };
 </script>
 
-  <title>为什么索引能够提升数据查询效率 | WANKAI'S BLOG</title>
+  <title>一条SQL语句在执行时，其底层经历了哪些过程？ | WANKAI'S BLOG</title>
   
 
 
@@ -385,7 +381,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://martin3242017.github.io/2018/05/05/为什么索引能够提升数据查询效率/">
+    <link itemprop="mainEntityOfPage" href="https://martin3242017.github.io/2017/05/07/一条sql执行1.0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WANKAI">
@@ -402,7 +398,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">为什么索引能够提升数据查询效率
+          <h1 class="post-title" itemprop="name headline">一条SQL语句在执行时，其底层经历了哪些过程？
 
               
             
@@ -427,7 +423,7 @@
                 
               
 
-              <time title="创建时间：2018-05-05 00:00:05" itemprop="dateCreated datePublished" datetime="2018-05-05T00:00:05+08:00">2018-05-05</time>
+              <time title="创建时间：2017-05-07 00:30:36" itemprop="dateCreated datePublished" datetime="2017-05-07T00:30:36+08:00">2017-05-07</time>
             </span>
           
 
@@ -460,8 +456,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2018/05/05/为什么索引能够提升数据查询效率/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/05/05/为什么索引能够提升数据查询效率/" itemprop="commentCount"></span>
+                <a href="/2017/05/07/一条sql执行1.0/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/05/07/一条sql执行1.0/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -500,66 +496,16 @@
       
 
       
-        <p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/70973487.jpg" alt="【思维导图-索引篇】"></p>
-<blockquote>
-<p><strong>下面是我补充的一些内容</strong></p>
-</blockquote>
-<h1 id="为什么索引能提高查询速度"><a href="#为什么索引能提高查询速度" class="headerlink" title="为什么索引能提高查询速度"></a>为什么索引能提高查询速度</h1><blockquote>
-<p>以下内容整理自：<br> 地址： <a href="https://juejin.im/post/5b55b842f265da0f9e589e79" target="_blank" rel="noopener">https://juejin.im/post/5b55b842f265da0f9e589e79</a><br> 作者 ：Java3y</p>
-</blockquote>
-<h3 id="先从-MySQL-的基本存储结构说起"><a href="#先从-MySQL-的基本存储结构说起" class="headerlink" title="先从 MySQL 的基本存储结构说起"></a>先从 MySQL 的基本存储结构说起</h3><p>MySQL的基本存储结构是页(记录都存在页里边)：</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/28559421.jpg" alt="MySQL的基本存储结构是页"></p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/82053134.jpg" alt></p>
-<ul>
-<li><strong>各个数据页可以组成一个双向链表</strong></li>
-<li><strong>每个数据页中的记录又可以组成一个单向链表</strong><ul>
-<li>每个数据页都会为存储在它里边儿的记录生成一个页目录，在通过主键查找某条记录的时候可以在页目录中使用二分法快速定位到对应的槽，然后再遍历该槽对应分组中的记录即可快速找到指定的记录</li>
-<li>以其他列(非主键)作为搜索条件：只能从最小记录开始依次遍历单链表中的每条记录。</li>
-</ul>
-</li>
-</ul>
-<p>所以说，如果我们写select * from user where indexname = ‘xxx’这样没有进行任何优化的sql语句，默认会这样做：</p>
-<ol>
-<li><strong>定位到记录所在的页：需要遍历双向链表，找到所在的页</strong></li>
-<li><strong>从所在的页内中查找相应的记录：由于不是根据主键查询，只能遍历所在页的单链表了</strong></li>
-</ol>
-<p>很明显，在数据量很大的情况下这样查找会很慢！这样的时间复杂度为O（n）。</p>
-<h3 id="使用索引之后"><a href="#使用索引之后" class="headerlink" title="使用索引之后"></a>使用索引之后</h3><p>索引做了些什么可以让我们查询加快速度呢？其实就是将无序的数据变成有序(相对)：</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/5373082.jpg" alt></p>
-<p>要找到id为8的记录简要步骤：</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/89338047.jpg" alt></p>
-<p>很明显的是：没有用索引我们是需要遍历双向链表来定位对应的页，现在通过 <strong>“目录”</strong> 就可以很快地定位到对应的页上了！（二分查找，时间复杂度近似为O(logn)）</p>
-<p>其实底层结构就是B+树，B+树作为树的一种实现，能够让我们很快地查找出对应的记录。</p>
-<h1 id="关于索引其他重要的内容补充"><a href="#关于索引其他重要的内容补充" class="headerlink" title="关于索引其他重要的内容补充"></a>关于索引其他重要的内容补充</h1><blockquote>
-<p>以下内容整理自：《Java工程师修炼之道》</p>
-</blockquote>
-<h3 id="最左前缀原则"><a href="#最左前缀原则" class="headerlink" title="最左前缀原则"></a>最左前缀原则</h3><p>MySQL中的索引可以以一定顺序引用多列，这种索引叫作联合索引。如User表的name和city加联合索引就是(name,city)，而最左前缀原则指的是，如果查询的时候查询条件精确匹配索引的左边连续一列或几列，则此列就可以被用到。如下：        </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select * from user where name=xx and city=xx ; ／／可以命中索引</span><br><span class="line">select * from user where name=xx ; // 可以命中索引</span><br><span class="line">select * from user where city=xx ; // 无法命中索引</span><br></pre></td></tr></table></figure>
+        <p>一条SQL语句在执行时，其底层经历了哪些过程？<br>大体来讲，MySQL 可以分为 Server 层和存储引擎层两部分（当然，首先还得经过客户端）<br>多个存储引擎共用一个server层 因此所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等</p>
+<img src="https://image-static.segmentfault.com/365/592/3655924384-5cce7fc25c25d_articlex">
 
-<p>这里需要注意的是，查询的时候如果两个条件都用上了，但是顺序不同，如 <code>city= xx and name ＝xx</code>，那么现在的查询引擎会自动优化为匹配联合索引的顺序，这样是能够命中索引的。</p>
-<p>由于最左前缀原则，在创建联合索引时，索引字段的顺序需要考虑字段值去重之后的个数，较多的放前面。ORDER BY子句也遵循此规则。</p>
-<h3 id="注意避免冗余索引"><a href="#注意避免冗余索引" class="headerlink" title="注意避免冗余索引"></a>注意避免冗余索引</h3><p>冗余索引指的是索引的功能相同，能够命中 就肯定能命中 ，那么 就是冗余索引如（name,city ）和（name ）这两个索引就是冗余索引，能够命中后者的查询肯定是能够命中前者的 在大多数情况下，都应该尽量扩展已有的索引而不是创建新索引。</p>
-<p>MySQLS.7 版本后，可以通过查询 sys 库的 <code>schema_redundant_indexes</code> 表来查看冗余索引             </p>
-<h3 id="Mysql如何为表字段添加索引？？？"><a href="#Mysql如何为表字段添加索引？？？" class="headerlink" title="Mysql如何为表字段添加索引？？？"></a>Mysql如何为表字段添加索引？？？</h3><p>1.添加PRIMARY KEY（主键索引）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE `table_name` ADD PRIMARY KEY ( `column` )</span><br></pre></td></tr></table></figure>
 
-<p>2.添加UNIQUE(唯一索引) </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE `table_name` ADD UNIQUE ( `column` )</span><br></pre></td></tr></table></figure>
-
-<p>3.添加INDEX(普通索引) </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE `table_name` ADD INDEX index_name ( `column` )</span><br></pre></td></tr></table></figure>
-
-<p>4.添加FULLTEXT(全文索引) </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE `table_name` ADD FULLTEXT ( `column`)</span><br></pre></td></tr></table></figure>
-
-<p>5.添加多列索引</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE `table_name` ADD INDEX index_name ( `column1`, `column2`, `column3` )</span><br></pre></td></tr></table></figure>
-
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
-<li>《Java工程师修炼之道》</li>
-<li>《MySQL高性能书籍_第3版》</li>
-<li><a href="https://juejin.im/post/5b55b842f265da0f9e589e79" target="_blank" rel="noopener">https://juejin.im/post/5b55b842f265da0f9e589e79</a></li>
-</ul>
+<p>建表时如果不指定存储引擎则默认使用的是InnoDB存储引擎（MySQL5.5.5版本以前默认使用的是MyISAM引擎 TODO:二者区别后续讲解）</p>
+<p><strong>连接器</strong><br>一条SQL语句从客户端传过来首先会创建一个连接，用username和password认证身份<br>连接完成后如果没有其他操作便处于空闲状态 默认8h自动断开空闲连接<br>连接还分为长连接和短连接<br>长连接：持续使用同一个连接处理请求<br>短连接：一个连接仅执行几次后便断开，然后重新建立连接<br>因为创建连接的过程比较复杂，所以建议尽量使用长连接<br>但是长连接太多有时候MySQL占用内存涨的特别快，此时可以考虑以下两种方案：<br>1.定期断开长连接或者执行一个占用内存大的查询后断开连接重新连接后继续下面的查询<br>2.MySQL5.7以上版本可以使用mysql_reset_connection命令来初始化连接资源，此操作不需要重连以及登录验证，就可以将连接恢复到刚刚创建完的状态</p>
+<p><strong>查询缓存</strong><br>建立连接后先去查询缓存<br>但是大家基本不用mysql的缓存功能<br>因为只要有对该表数据更新，表上的所有缓存都会清空然后重新创建缓存<br>所以一般默认不查缓存 但可以使用select SQL_CACHE * from T where ID = 1按需查询<br>PS.MySQL8.0直接将查询缓存功能删掉了</p>
+<p><strong>分析器</strong><br>经过缓存器后来到分析器<br>先做词法分析 分析出sql语句中的关键字<br>然后做语法分析 判断是否有语法错误</p>
+<p><strong>优化器</strong><br>经过分析后MySQL知道你要做什么了，但是在实际执行之前还得经过优化器优化一下<br>在表中有多个索引的时候，由优化器来决定使用哪个索引<br>或者有多表关联（join）的时候决定连接顺序 选择效率高的方案<br>TODO：MySQL根据什么选择索引呢？后续解答</p>
+<p><strong>执行器</strong><br>执行器开始执行之前会验证是否有读/写权限 没有则返回权限错误<br>有的话就打开表调用指定的存储引擎接口获取执行结果集 返回给客户端<br>TODO:存储引擎内部机制后续讲解</p>
 
       
     </div>
@@ -630,7 +576,7 @@
           
             <a href="/tags/MySQL/" rel="tag"># MySQL</a>
           
-            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
           
         </div>
       
@@ -643,8 +589,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/05/常见的加密算法/" rel="next" title="常见加密算法">
-                <i class="fa fa-chevron-left"></i> 常见加密算法
+              <a href="/2017/05/02/一千行MySQL命令/" rel="next" title="MySQL语句汇总">
+                <i class="fa fa-chevron-left"></i> MySQL语句汇总
               </a>
             
           </div>
@@ -653,8 +599,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/06/07/ubuntu系统环境搭建/" rel="prev" title="Ubuntu环境搭建">
-                Ubuntu环境搭建 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/09/Spring 中的 bean 生命周期/" rel="prev" title="Spring 中的 bean 生命周期">
+                Spring 中的 bean 生命周期 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -703,17 +649,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -963,23 +900,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么索引能提高查询速度"><span class="nav-number">1.</span> <span class="nav-text">为什么索引能提高查询速度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先从-MySQL-的基本存储结构说起"><span class="nav-number">1.0.1.</span> <span class="nav-text">先从 MySQL 的基本存储结构说起</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用索引之后"><span class="nav-number">1.0.2.</span> <span class="nav-text">使用索引之后</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#关于索引其他重要的内容补充"><span class="nav-number">2.</span> <span class="nav-text">关于索引其他重要的内容补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最左前缀原则"><span class="nav-number">2.0.1.</span> <span class="nav-text">最左前缀原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意避免冗余索引"><span class="nav-number">2.0.2.</span> <span class="nav-text">注意避免冗余索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql如何为表字段添加索引？？？"><span class="nav-number">2.0.3.</span> <span class="nav-text">Mysql如何为表字段添加索引？？？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       
