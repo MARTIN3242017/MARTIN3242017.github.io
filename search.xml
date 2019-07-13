@@ -74,7 +74,7 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[【Redis】pipeline管道打包处理模式]]></title>
+    <title><![CDATA[【Redis】Pipeline管道打包处理模式]]></title>
     <url>%2F2018%2F11%2F01%2F%E3%80%90Redis%E3%80%91Pipeline%E7%AE%A1%E9%81%93%E6%89%93%E5%8C%85%E5%A4%84%E7%90%86%E6%A8%A1%E5%BC%8F%2F</url>
     <content type="text"><![CDATA[Redis本身是一个cs模式的tcp server, client可以通过一个socket连续发起多个请求命令。 每个请求命令发出后client通常会阻塞并等待redis服务端处理，redis服务端处理完后将结果返回给client。 由于我们知道Redis非常快，这种发送模式中的性能瓶颈其实在于请求传输速度，就算redis server端有很强的处理能力，也由于收到的client消息少，而造成吞吐量小。我们可以修改一种处理模式：通过pipeline方式将client端命令一起发出，redis server会处理完多条命令后，将结果一起打包返回client,从而节省大量的网络延迟开销。下面以Java的客户端jedis来测试pipeline的效果。 12345678Pipeline pipeline = jedis.pipelined(); long start = System.currentTimeMillis(); for (int i = 0; i &lt; 10000; i++) &#123; pipeline.hset("server", "" + i, "" + i); &#125; List&lt;Object&gt; results = pipeline.execute(); long end = System.currentTimeMillis(); System.out.println("Pipelined SET: " + ((end - start)/1000.0) + " seconds"); 测试的结果采用pipeline方式，效率几乎与mset一样，每秒插入约15万数据，但内存占用仅为mset的1/3.]]></content>
       <categories>
@@ -239,6 +239,19 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[后端程序员必备的Linux基础知识]]></title>
+    <url>%2F2018%2F01%2F01%2F%E5%90%8E%E7%AB%AF%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%E7%9A%84Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%2F</url>
+    <content type="text"><![CDATA[一 从认识操作系统开始 1.1 操作系统简介 1.2 操作系统简单分类 二 初探Linux 2.1 Linux简介 2.2 Linux诞生简介 2.3 Linux的分类 三 Linux文件系统概览 3.1 Linux文件系统简介 3.2 文件类型与目录结构 四 Linux基本命令 4.1 目录切换命令 4.2 目录的操作命令（增删改查） 4.3 文件的操作命令（增删改查） 4.4 压缩文件的操作命令 4.5 Linux的权限命令 4.6 Linux 用户管理 4.7 Linux系统用户组的管理 4.8 其他常用命令 推荐一个Github开源的Linux学习指南(Java工程师向)：https://github.com/judasn/Linux-Tutorial 学习Linux之前，我们先来简单的认识一下操作系统。 一 从认识操作系统开始1.1 操作系统简介我通过以下四点介绍什么操作系统： 操作系统（Operation System，简称OS）是管理计算机硬件与软件资源的程序，是计算机系统的内核与基石； 操作系统本质上是运行在计算机上的软件程序 ； 为用户提供一个与系统交互的操作界面 ； 操作系统分内核与外壳（我们可以把外壳理解成围绕着内核的应用程序，而内核就是能操作硬件的程序）。 1.2 操作系统简单分类 Windows: 目前最流行的个人桌面操作系统 ，不做多的介绍，大家都清楚。 Unix： 最早的多用户、多任务操作系统 .按照操作系统的分类，属于分时操作系统。Unix 大多被用在服务器、工作站，现在也有用在个人计算机上。它在创建互联网、计算机网络或客户端/服务器模型方面发挥着非常重要的作用。 Linux: Linux是一套免费使用和自由传播的类Unix操作系统.Linux存在着许多不同的Linux版本，但它们都使用了 Linux内核 。Linux可安装在各种计算机硬件设备中，比如手机、平板电脑、路由器、视频游戏控制台、台式计算机、大型机和超级计算机。严格来讲，Linux这个词本身只表示Linux内核，但实际上人们已经习惯了用Linux来形容整个基于Linux内核，并且使用GNU 工程各种工具和数据库的操作系统。 二 初探Linux2.1 Linux简介我们上面已经介绍到了Linux，我们这里只强调三点。 类Unix系统： Linux是一种自由、开放源码的类似Unix的操作系统 Linux内核： 严格来说，Linux这个词本身只表示Linux内核 Linux之父： 一个编程领域的传奇式人物。他是Linux内核的最早作者，随后发起了这个开源项目，担任Linux内核的首要架构师与项目协调者，是当今世界最著名的电脑程序员、黑客之一。他还发起了Git这个开源项目，并为主要的开发者。 2.2 Linux诞生简介 1991年，芬兰的业余计算机爱好者Linus Torvalds编写了一款类似Minix的系统（基于微内核架构的类Unix操作系统）被ftp管理员命名为Linux 加入到自由软件基金的GNU计划中; Linux以一只可爱的企鹅作为标志，象征着敢作敢为、热爱生活。 2.3 Linux的分类Linux根据原生程度，分为两种： 内核版本： Linux不是一个操作系统，严格来讲，Linux只是一个操作系统中的内核。内核是什么？内核建立了计算机软件与硬件之间通讯的平台，内核提供系统服务，比如文件管理、虚拟内存、设备I/O等； 发行版本： 一些组织或公司在内核版基础上进行二次开发而重新发行的版本。Linux发行版本有很多种（ubuntu和CentOS用的都很多，初学建议选择CentOS），如下图所示： 三 Linux文件系统概览3.1 Linux文件系统简介在Linux操作系统中，所有被操作系统管理的资源，例如网络接口卡、磁盘驱动器、打印机、输入输出设备、普通文件或是目录都被看作是一个文件。 也就是说在LINUX系统中有一个重要的概念：一切都是文件。其实这是UNIX哲学的一个体现，而Linux是重写UNIX而来，所以这个概念也就传承了下来。在UNIX系统中，把一切资源都看作是文件，包括硬件设备。UNIX系统把每个硬件都看成是一个文件，通常称为设备文件，这样用户就可以用读写文件的方式实现对硬件的访问。 3.2 文件类型与目录结构Linux支持5种文件类型 ： Linux的目录结构如下： Linux文件系统的结构层次鲜明，就像一棵倒立的树，最顶层是其根目录： 常见目录说明： /bin： 存放二进制可执行文件(ls、cat、mkdir等)，常用命令一般都在这里； /etc： 存放系统管理和配置文件； /home： 存放所有用户文件的根目录，是用户主目录的基点，比如用户user的主目录就是/home/user，可以用~user表示； /usr ： 用于存放系统应用程序； /opt： 额外安装的可选应用程序包所放置的位置。一般情况下，我们可以把tomcat等都安装到这里； /proc： 虚拟文件系统目录，是系统内存的映射。可直接访问这个目录来获取系统信息； /root： 超级用户（系统管理员）的主目录（特权阶级^o^）； /sbin: 存放二进制可执行文件，只有root才能访问。这里存放的是系统管理员使用的系统级别的管理命令和程序。如ifconfig等； /dev： 用于存放设备文件； /mnt： 系统管理员安装临时文件系统的安装点，系统提供这个目录是让用户临时挂载其他的文件系统； /boot： 存放用于系统引导时使用的各种文件； /lib ： 存放着和系统运行相关的库文件 ； /tmp： 用于存放各种临时文件，是公用的临时文件存储点； /var： 用于存放运行时需要改变数据的文件，也是某些大文件的溢出区，比方说各种服务的日志文件（系统启动日志等。）等； /lost+found： 这个目录平时是空的，系统非正常关机而留下“无家可归”的文件（windows下叫什么.chk）就在这里。 四 Linux基本命令下面只是给出了一些比较常用的命令。推荐一个Linux命令快查网站，非常不错，大家如果遗忘某些命令或者对某些命令不理解都可以在这里得到解决。 Linux命令大全：http://man.linuxde.net/ 4.1 目录切换命令 cd usr： 切换到该目录下usr目录 cd ..（或cd../）： 切换到上一层目录 cd /： 切换到系统根目录 cd ~： 切换到用户主目录 cd -： 切换到上一个操作所在目录 4.2 目录的操作命令(增删改查) mkdir 目录名称： 增加目录 ls或者ll（ll是ls -l的别名，ll命令可以看到该目录下的所有目录和文件的详细信息）：查看目录信息 find 目录 参数： 寻找目录（查） 示例： 列出当前目录及子目录下所有文件和文件夹: find . 在/home目录下查找以.txt结尾的文件名:find /home -name &quot;*.txt&quot; 同上，但忽略大小写: find /home -iname &quot;*.txt&quot; 当前目录及子目录下查找所有以.txt和.pdf结尾的文件:find . \( -name &quot;*.txt&quot; -o -name &quot;*.pdf&quot; \)或find . -name &quot;*.txt&quot; -o -name &quot;*.pdf&quot; mv 目录名称 新目录名称： 修改目录的名称（改） 注意：mv的语法不仅可以对目录进行重命名而且也可以对各种文件，压缩包等进行 重命名的操作。mv命令用来对文件或目录重新命名，或者将文件从一个目录移到另一个目录中。后面会介绍到mv命令的另一个用法。 mv 目录名称 目录的新位置： 移动目录的位置—剪切（改） 注意：mv语法不仅可以对目录进行剪切操作，对文件和压缩包等都可执行剪切操作。另外mv与cp的结果不同，mv好像文件“搬家”，文件个数并未增加。而cp对文件进行复制，文件个数增加了。 cp -r 目录名称 目录拷贝的目标位置： 拷贝目录（改），-r代表递归拷贝 注意：cp命令不仅可以拷贝目录还可以拷贝文件，压缩包等，拷贝文件和压缩包时不 用写-r递归 rm [-rf] 目录: 删除目录（删） 注意：rm不仅可以删除目录，也可以删除其他文件或压缩包，为了增强大家的记忆， 无论删除任何目录或文件，都直接使用rm -rf 目录/文件/压缩包 4.3 文件的操作命令(增删改查) touch 文件名称: 文件的创建（增） cat/more/less/tail 文件名称 文件的查看（查） cat： 查看显示文件内容 more： 可以显示百分比，回车可以向下一行， 空格可以向下一页，q可以退出查看 less： 可以使用键盘上的PgUp和PgDn向上 和向下翻页，q结束查看 tail-10 ： 查看文件的后10行，Ctrl+C结束 注意：命令 tail -f 文件 可以对某个文件进行动态监控，例如tomcat的日志文件， 会随着程序的运行，日志会变化，可以使用tail -f catalina-2016-11-11.log 监控 文 件的变化 vim 文件： 修改文件的内容（改） vim编辑器是Linux中的强大组件，是vi编辑器的加强版，vim编辑器的命令和快捷方式有很多，但此处不一一阐述，大家也无需研究的很透彻，使用vim编辑修改文件的方式基本会使用就可以了。 在实际开发中，使用vim编辑器主要作用就是修改配置文件，下面是一般步骤： vim 文件——&gt;进入文件—–&gt;命令模式——&gt;按i进入编辑模式—–&gt;编辑文件 ——-&gt;按Esc进入底行模式—–&gt;输入：wq/q! （输入wq代表写入内容并退出，即保存；输入q!代表强制退出不保存。） rm -rf 文件： 删除文件（删） 同目录删除：熟记 rm -rf 文件 即可 4.4 压缩文件的操作命令1）打包并压缩文件： Linux中的打包文件一般是以.tar结尾的，压缩的命令一般是以.gz结尾的。 而一般情况下打包和压缩是一起进行的，打包并压缩后的文件的后缀名一般.tar.gz。命令：tar -zcvf 打包压缩后的文件名 要打包压缩的文件其中： z：调用gzip压缩命令进行压缩 c：打包文件 v：显示运行过程 f：指定文件名 比如：加入test目录下有三个文件分别是：aaa.txt bbb.txt ccc.txt，如果我们要打包test目录并指定压缩后的压缩包名称为test.tar.gz可以使用命令：tar -zcvf test.tar.gz aaa.txt bbb.txt ccc.txt或：tar -zcvf test.tar.gz /test/ 2）解压压缩包： 命令：tar [-xvf] 压缩文件 其中：x：代表解压 示例： 1 将/test下的test.tar.gz解压到当前目录下可以使用命令：tar -xvf test.tar.gz 2 将/test下的test.tar.gz解压到根目录/usr下:tar -xvf xxx.tar.gz -C /usr（- C代表指定解压的位置） 4.5 Linux的权限命令 操作系统中每个文件都拥有特定的权限、所属用户和所属组。权限是操作系统用来限制资源访问的机制，在Linux中权限一般分为读(readable)、写(writable)和执行(excutable)，分为三组。分别对应文件的属主(owner)，属组(group)和其他用户(other)，通过这样的机制来限制哪些用户、哪些组可以对特定的文件进行什么样的操作。通过 ls -l 命令我们可以 查看某个目录下的文件或目录的权限 示例：在随意某个目录下ls -l 第一列的内容的信息解释如下： 下面将详细讲解文件的类型、Linux中权限以及文件有所有者、所在组、其它组具体是什么？ 文件的类型： d： 代表目录 -： 代表文件 l： 代表软链接（可以认为是window中的快捷方式） Linux中权限分为以下几种： r：代表权限是可读，r也可以用数字4表示 w：代表权限是可写，w也可以用数字2表示 x：代表权限是可执行，x也可以用数字1表示 文件和目录权限的区别： 对文件和目录而言，读写执行表示不同的意义。 对于文件： 权限名称 可执行操作 r 可以使用cat查看文件的内容 w 可以修改文件的内容 x 可以将其运行为二进制文件 对于目录： 权限名称 可执行操作 r 可以查看目录下列表 w 可以创建和删除目录下文件 x 可以使用cd进入目录 需要注意的是超级用户可以无视普通用户的权限，即使文件目录权限是000，依旧可以访问。在linux中的每个用户必须属于一个组，不能独立于组外。在linux中每个文件有所有者、所在组、其它组的概念。 所有者 一般为文件的创建者，谁创建了该文件，就天然的成为该文件的所有者，用ls ‐ahl命令可以看到文件的所有者 也可以使用chown 用户名 文件名来修改文件的所有者 。 文件所在组 当某个用户创建了一个文件后，这个文件的所在组就是该用户所在的组 用ls ‐ahl命令可以看到文件的所有组 也可以使用chgrp 组名 文件名来修改文件所在的组。 其它组 除开文件的所有者和所在组的用户外，系统的其它用户都是文件的其它组 我们再来看看如何修改文件/目录的权限。 修改文件/目录的权限的命令：chmod 示例：修改/test下的aaa.txt的权限为属主有全部权限，属主所在的组有读写权限，其他用户只有读的权限 chmod u=rwx,g=rw,o=r aaa.txt 上述示例还可以使用数字表示： chmod 764 aaa.txt 补充一个比较常用的东西: 假如我们装了一个zookeeper，我们每次开机到要求其自动启动该怎么办？ 新建一个脚本zookeeper 为新建的脚本zookeeper添加可执行权限，命令是:chmod +x zookeeper 把zookeeper这个脚本添加到开机启动项里面，命令是：chkconfig --add zookeeper 如果想看看是否添加成功，命令是：chkconfig --list 4.6 Linux 用户管理Linux系统是一个多用户多任务的分时操作系统，任何一个要使用系统资源的用户，都必须首先向系统管理员申请一个账号，然后以这个账号的身份进入系统。 用户的账号一方面可以帮助系统管理员对使用系统的用户进行跟踪，并控制他们对系统资源的访问；另一方面也可以帮助用户组织文件，并为用户提供安全性保护。 Linux用户管理相关命令: useradd 选项 用户名:添加用户账号 userdel 选项 用户名:删除用户帐号 usermod 选项 用户名:修改帐号 passwd 用户名:更改或创建用户的密码 passwd -S 用户名 :显示用户账号密码信息 passwd -d 用户名: 清除用户密码 useradd命令用于Linux中创建的新的系统用户。useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。 passwd命令用于设置用户的认证信息，包括用户密码、密码过期时间等。系统管理者则能用它管理系统用户的密码。只有管理者可以指定用户名称，一般用户只能变更自己的密码。 4.7 Linux系统用户组的管理每个用户都有一个用户组，系统可以对一个用户组中的所有用户进行集中管理。不同Linux 系统对用户组的规定有所不同，如Linux下的用户属于与它同名的用户组，这个用户组在创建用户时同时创建。 用户组的管理涉及用户组的添加、删除和修改。组的增加、删除和修改实际上就是对/etc/group文件的更新。 Linux系统用户组的管理相关命令: groupadd 选项 用户组 :增加一个新的用户组 groupdel 用户组:要删除一个已有的用户组 groupmod 选项 用户组 : 修改用户组的属性 4.8 其他常用命令 pwd： 显示当前所在位置 grep 要搜索的字符串 要搜索的文件 --color： 搜索命令，–color代表高亮显示 ps -ef/ps -aux： 这两个命令都是查看当前系统正在运行进程，两者的区别是展示格式不同。如果想要查看特定的进程可以使用这样的格式：ps aux|grep redis （查看包括redis字符串的进程），也可使用 pgrep redis -a。 注意：如果直接用ps（（Process Status））命令，会显示所有进程的状态，通常结合grep命令查看某进程的状态。 kill -9 进程的pid： 杀死进程（-9 表示强制终止。） 先用ps查找进程，然后用kill杀掉 网络通信命令： 查看当前系统的网卡信息：ifconfig 查看与某台机器的连接情况：ping 查看当前系统的端口使用：netstat -an net-tools 和 iproute2 ： net-tools起源于BSD的TCP/IP工具箱，后来成为老版本Linux内核中配置网络功能的工具。但自2001年起，Linux社区已经对其停止维护。同时，一些Linux发行版比如Arch Linux和CentOS/RHEL 7则已经完全抛弃了net-tools，只支持iproute2。linux ip命令类似于ifconfig，但功能更强大，旨在替代它。更多详情请阅读如何在Linux中使用IP命令和示例 shutdown： shutdown -h now： 指定现在立即关机；shutdown +5 &quot;System will shutdown after 5 minutes&quot;：指定5分钟后关机，同时送出警告信息给登入用户。 reboot： reboot： 重开机。reboot -w： 做个重开机的模拟（只有纪录并不会真的重开机）。]]></content>
+      <categories>
+        <category>服务器</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+        <tag>操作系统</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[让 hexo 博客在后台跑起来]]></title>
     <url>%2F2018%2F01%2F01%2F%E8%AE%A9%20hexo%20%E5%8D%9A%E5%AE%A2%E5%9C%A8%E5%90%8E%E5%8F%B0%E8%B7%91%E8%B5%B7%E6%9D%A5%2F</url>
     <content type="text"><![CDATA[让 hexo 博客在后台跑起来 前几天利用 hexo 搭建了一个博客，于是很高兴地用 $ hexo server 在我的 Linux 服务器上跑了起来。 但是发现，只要关闭了进程，博客也就跟着关闭了。想着，这样的博客给谁看啊，总不能我本地一直开着进程吧。 于是我开始搜索相关 hexo 后台运行的方法，貌似很多人也有同样的问题，官方给出的方法是$ hexo s &amp;,试了一下进程还是莫名其妙中断了。于是乎看到一篇文章说使用 forever 可以解决，这个给了我启发，那么就用 pm2 运行我的博客不就行了。 那么开始操作： 安装pm21npm install -g pm2 写一个执行脚本学习一下 Node.js 官方文档的 child_process.exec(command[, options][, callback]) 部分 参考官方文档 在博客根目录下创建一个文件 run.js 12345678910//run.jsconst &#123; exec &#125; = require('child_process')exec('hexo server',(error, stdout, stderr) =&gt; &#123; if(error)&#123; console.log(`exec error: $&#123;error&#125;`) return &#125; console.log(`stdout: $&#123;stdout&#125;`); console.log(`stderr: $&#123;stderr&#125;`);&#125;) 运行脚本进入博客根目录 1pm2 start run.js]]></content>
@@ -251,16 +264,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[后端程序员必备的Linux基础知识]]></title>
-    <url>%2F2018%2F01%2F01%2F%E5%90%8E%E7%AB%AF%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%E7%9A%84Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%2F</url>
-    <content type="text"><![CDATA[一 从认识操作系统开始 1.1 操作系统简介 1.2 操作系统简单分类 二 初探Linux 2.1 Linux简介 2.2 Linux诞生简介 2.3 Linux的分类 三 Linux文件系统概览 3.1 Linux文件系统简介 3.2 文件类型与目录结构 四 Linux基本命令 4.1 目录切换命令 4.2 目录的操作命令（增删改查） 4.3 文件的操作命令（增删改查） 4.4 压缩文件的操作命令 4.5 Linux的权限命令 4.6 Linux 用户管理 4.7 Linux系统用户组的管理 4.8 其他常用命令 推荐一个Github开源的Linux学习指南(Java工程师向)：https://github.com/judasn/Linux-Tutorial 学习Linux之前，我们先来简单的认识一下操作系统。 一 从认识操作系统开始1.1 操作系统简介我通过以下四点介绍什么操作系统： 操作系统（Operation System，简称OS）是管理计算机硬件与软件资源的程序，是计算机系统的内核与基石； 操作系统本质上是运行在计算机上的软件程序 ； 为用户提供一个与系统交互的操作界面 ； 操作系统分内核与外壳（我们可以把外壳理解成围绕着内核的应用程序，而内核就是能操作硬件的程序）。 1.2 操作系统简单分类 Windows: 目前最流行的个人桌面操作系统 ，不做多的介绍，大家都清楚。 Unix： 最早的多用户、多任务操作系统 .按照操作系统的分类，属于分时操作系统。Unix 大多被用在服务器、工作站，现在也有用在个人计算机上。它在创建互联网、计算机网络或客户端/服务器模型方面发挥着非常重要的作用。 Linux: Linux是一套免费使用和自由传播的类Unix操作系统.Linux存在着许多不同的Linux版本，但它们都使用了 Linux内核 。Linux可安装在各种计算机硬件设备中，比如手机、平板电脑、路由器、视频游戏控制台、台式计算机、大型机和超级计算机。严格来讲，Linux这个词本身只表示Linux内核，但实际上人们已经习惯了用Linux来形容整个基于Linux内核，并且使用GNU 工程各种工具和数据库的操作系统。 二 初探Linux2.1 Linux简介我们上面已经介绍到了Linux，我们这里只强调三点。 类Unix系统： Linux是一种自由、开放源码的类似Unix的操作系统 Linux内核： 严格来说，Linux这个词本身只表示Linux内核 Linux之父： 一个编程领域的传奇式人物。他是Linux内核的最早作者，随后发起了这个开源项目，担任Linux内核的首要架构师与项目协调者，是当今世界最著名的电脑程序员、黑客之一。他还发起了Git这个开源项目，并为主要的开发者。 2.2 Linux诞生简介 1991年，芬兰的业余计算机爱好者Linus Torvalds编写了一款类似Minix的系统（基于微内核架构的类Unix操作系统）被ftp管理员命名为Linux 加入到自由软件基金的GNU计划中; Linux以一只可爱的企鹅作为标志，象征着敢作敢为、热爱生活。 2.3 Linux的分类Linux根据原生程度，分为两种： 内核版本： Linux不是一个操作系统，严格来讲，Linux只是一个操作系统中的内核。内核是什么？内核建立了计算机软件与硬件之间通讯的平台，内核提供系统服务，比如文件管理、虚拟内存、设备I/O等； 发行版本： 一些组织或公司在内核版基础上进行二次开发而重新发行的版本。Linux发行版本有很多种（ubuntu和CentOS用的都很多，初学建议选择CentOS），如下图所示： 三 Linux文件系统概览3.1 Linux文件系统简介在Linux操作系统中，所有被操作系统管理的资源，例如网络接口卡、磁盘驱动器、打印机、输入输出设备、普通文件或是目录都被看作是一个文件。 也就是说在LINUX系统中有一个重要的概念：一切都是文件。其实这是UNIX哲学的一个体现，而Linux是重写UNIX而来，所以这个概念也就传承了下来。在UNIX系统中，把一切资源都看作是文件，包括硬件设备。UNIX系统把每个硬件都看成是一个文件，通常称为设备文件，这样用户就可以用读写文件的方式实现对硬件的访问。 3.2 文件类型与目录结构Linux支持5种文件类型 ： Linux的目录结构如下： Linux文件系统的结构层次鲜明，就像一棵倒立的树，最顶层是其根目录： 常见目录说明： /bin： 存放二进制可执行文件(ls、cat、mkdir等)，常用命令一般都在这里； /etc： 存放系统管理和配置文件； /home： 存放所有用户文件的根目录，是用户主目录的基点，比如用户user的主目录就是/home/user，可以用~user表示； /usr ： 用于存放系统应用程序； /opt： 额外安装的可选应用程序包所放置的位置。一般情况下，我们可以把tomcat等都安装到这里； /proc： 虚拟文件系统目录，是系统内存的映射。可直接访问这个目录来获取系统信息； /root： 超级用户（系统管理员）的主目录（特权阶级^o^）； /sbin: 存放二进制可执行文件，只有root才能访问。这里存放的是系统管理员使用的系统级别的管理命令和程序。如ifconfig等； /dev： 用于存放设备文件； /mnt： 系统管理员安装临时文件系统的安装点，系统提供这个目录是让用户临时挂载其他的文件系统； /boot： 存放用于系统引导时使用的各种文件； /lib ： 存放着和系统运行相关的库文件 ； /tmp： 用于存放各种临时文件，是公用的临时文件存储点； /var： 用于存放运行时需要改变数据的文件，也是某些大文件的溢出区，比方说各种服务的日志文件（系统启动日志等。）等； /lost+found： 这个目录平时是空的，系统非正常关机而留下“无家可归”的文件（windows下叫什么.chk）就在这里。 四 Linux基本命令下面只是给出了一些比较常用的命令。推荐一个Linux命令快查网站，非常不错，大家如果遗忘某些命令或者对某些命令不理解都可以在这里得到解决。 Linux命令大全：http://man.linuxde.net/ 4.1 目录切换命令 cd usr： 切换到该目录下usr目录 cd ..（或cd../）： 切换到上一层目录 cd /： 切换到系统根目录 cd ~： 切换到用户主目录 cd -： 切换到上一个操作所在目录 4.2 目录的操作命令(增删改查) mkdir 目录名称： 增加目录 ls或者ll（ll是ls -l的别名，ll命令可以看到该目录下的所有目录和文件的详细信息）：查看目录信息 find 目录 参数： 寻找目录（查） 示例： 列出当前目录及子目录下所有文件和文件夹: find . 在/home目录下查找以.txt结尾的文件名:find /home -name &quot;*.txt&quot; 同上，但忽略大小写: find /home -iname &quot;*.txt&quot; 当前目录及子目录下查找所有以.txt和.pdf结尾的文件:find . \( -name &quot;*.txt&quot; -o -name &quot;*.pdf&quot; \)或find . -name &quot;*.txt&quot; -o -name &quot;*.pdf&quot; mv 目录名称 新目录名称： 修改目录的名称（改） 注意：mv的语法不仅可以对目录进行重命名而且也可以对各种文件，压缩包等进行 重命名的操作。mv命令用来对文件或目录重新命名，或者将文件从一个目录移到另一个目录中。后面会介绍到mv命令的另一个用法。 mv 目录名称 目录的新位置： 移动目录的位置—剪切（改） 注意：mv语法不仅可以对目录进行剪切操作，对文件和压缩包等都可执行剪切操作。另外mv与cp的结果不同，mv好像文件“搬家”，文件个数并未增加。而cp对文件进行复制，文件个数增加了。 cp -r 目录名称 目录拷贝的目标位置： 拷贝目录（改），-r代表递归拷贝 注意：cp命令不仅可以拷贝目录还可以拷贝文件，压缩包等，拷贝文件和压缩包时不 用写-r递归 rm [-rf] 目录: 删除目录（删） 注意：rm不仅可以删除目录，也可以删除其他文件或压缩包，为了增强大家的记忆， 无论删除任何目录或文件，都直接使用rm -rf 目录/文件/压缩包 4.3 文件的操作命令(增删改查) touch 文件名称: 文件的创建（增） cat/more/less/tail 文件名称 文件的查看（查） cat： 查看显示文件内容 more： 可以显示百分比，回车可以向下一行， 空格可以向下一页，q可以退出查看 less： 可以使用键盘上的PgUp和PgDn向上 和向下翻页，q结束查看 tail-10 ： 查看文件的后10行，Ctrl+C结束 注意：命令 tail -f 文件 可以对某个文件进行动态监控，例如tomcat的日志文件， 会随着程序的运行，日志会变化，可以使用tail -f catalina-2016-11-11.log 监控 文 件的变化 vim 文件： 修改文件的内容（改） vim编辑器是Linux中的强大组件，是vi编辑器的加强版，vim编辑器的命令和快捷方式有很多，但此处不一一阐述，大家也无需研究的很透彻，使用vim编辑修改文件的方式基本会使用就可以了。 在实际开发中，使用vim编辑器主要作用就是修改配置文件，下面是一般步骤： vim 文件——&gt;进入文件—–&gt;命令模式——&gt;按i进入编辑模式—–&gt;编辑文件 ——-&gt;按Esc进入底行模式—–&gt;输入：wq/q! （输入wq代表写入内容并退出，即保存；输入q!代表强制退出不保存。） rm -rf 文件： 删除文件（删） 同目录删除：熟记 rm -rf 文件 即可 4.4 压缩文件的操作命令1）打包并压缩文件： Linux中的打包文件一般是以.tar结尾的，压缩的命令一般是以.gz结尾的。 而一般情况下打包和压缩是一起进行的，打包并压缩后的文件的后缀名一般.tar.gz。命令：tar -zcvf 打包压缩后的文件名 要打包压缩的文件其中： z：调用gzip压缩命令进行压缩 c：打包文件 v：显示运行过程 f：指定文件名 比如：加入test目录下有三个文件分别是：aaa.txt bbb.txt ccc.txt，如果我们要打包test目录并指定压缩后的压缩包名称为test.tar.gz可以使用命令：tar -zcvf test.tar.gz aaa.txt bbb.txt ccc.txt或：tar -zcvf test.tar.gz /test/ 2）解压压缩包： 命令：tar [-xvf] 压缩文件 其中：x：代表解压 示例： 1 将/test下的test.tar.gz解压到当前目录下可以使用命令：tar -xvf test.tar.gz 2 将/test下的test.tar.gz解压到根目录/usr下:tar -xvf xxx.tar.gz -C /usr（- C代表指定解压的位置） 4.5 Linux的权限命令 操作系统中每个文件都拥有特定的权限、所属用户和所属组。权限是操作系统用来限制资源访问的机制，在Linux中权限一般分为读(readable)、写(writable)和执行(excutable)，分为三组。分别对应文件的属主(owner)，属组(group)和其他用户(other)，通过这样的机制来限制哪些用户、哪些组可以对特定的文件进行什么样的操作。通过 ls -l 命令我们可以 查看某个目录下的文件或目录的权限 示例：在随意某个目录下ls -l 第一列的内容的信息解释如下： 下面将详细讲解文件的类型、Linux中权限以及文件有所有者、所在组、其它组具体是什么？ 文件的类型： d： 代表目录 -： 代表文件 l： 代表软链接（可以认为是window中的快捷方式） Linux中权限分为以下几种： r：代表权限是可读，r也可以用数字4表示 w：代表权限是可写，w也可以用数字2表示 x：代表权限是可执行，x也可以用数字1表示 文件和目录权限的区别： 对文件和目录而言，读写执行表示不同的意义。 对于文件： 权限名称 可执行操作 r 可以使用cat查看文件的内容 w 可以修改文件的内容 x 可以将其运行为二进制文件 对于目录： 权限名称 可执行操作 r 可以查看目录下列表 w 可以创建和删除目录下文件 x 可以使用cd进入目录 需要注意的是超级用户可以无视普通用户的权限，即使文件目录权限是000，依旧可以访问。在linux中的每个用户必须属于一个组，不能独立于组外。在linux中每个文件有所有者、所在组、其它组的概念。 所有者 一般为文件的创建者，谁创建了该文件，就天然的成为该文件的所有者，用ls ‐ahl命令可以看到文件的所有者 也可以使用chown 用户名 文件名来修改文件的所有者 。 文件所在组 当某个用户创建了一个文件后，这个文件的所在组就是该用户所在的组 用ls ‐ahl命令可以看到文件的所有组 也可以使用chgrp 组名 文件名来修改文件所在的组。 其它组 除开文件的所有者和所在组的用户外，系统的其它用户都是文件的其它组 我们再来看看如何修改文件/目录的权限。 修改文件/目录的权限的命令：chmod 示例：修改/test下的aaa.txt的权限为属主有全部权限，属主所在的组有读写权限，其他用户只有读的权限 chmod u=rwx,g=rw,o=r aaa.txt 上述示例还可以使用数字表示： chmod 764 aaa.txt 补充一个比较常用的东西: 假如我们装了一个zookeeper，我们每次开机到要求其自动启动该怎么办？ 新建一个脚本zookeeper 为新建的脚本zookeeper添加可执行权限，命令是:chmod +x zookeeper 把zookeeper这个脚本添加到开机启动项里面，命令是：chkconfig --add zookeeper 如果想看看是否添加成功，命令是：chkconfig --list 4.6 Linux 用户管理Linux系统是一个多用户多任务的分时操作系统，任何一个要使用系统资源的用户，都必须首先向系统管理员申请一个账号，然后以这个账号的身份进入系统。 用户的账号一方面可以帮助系统管理员对使用系统的用户进行跟踪，并控制他们对系统资源的访问；另一方面也可以帮助用户组织文件，并为用户提供安全性保护。 Linux用户管理相关命令: useradd 选项 用户名:添加用户账号 userdel 选项 用户名:删除用户帐号 usermod 选项 用户名:修改帐号 passwd 用户名:更改或创建用户的密码 passwd -S 用户名 :显示用户账号密码信息 passwd -d 用户名: 清除用户密码 useradd命令用于Linux中创建的新的系统用户。useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。 passwd命令用于设置用户的认证信息，包括用户密码、密码过期时间等。系统管理者则能用它管理系统用户的密码。只有管理者可以指定用户名称，一般用户只能变更自己的密码。 4.7 Linux系统用户组的管理每个用户都有一个用户组，系统可以对一个用户组中的所有用户进行集中管理。不同Linux 系统对用户组的规定有所不同，如Linux下的用户属于与它同名的用户组，这个用户组在创建用户时同时创建。 用户组的管理涉及用户组的添加、删除和修改。组的增加、删除和修改实际上就是对/etc/group文件的更新。 Linux系统用户组的管理相关命令: groupadd 选项 用户组 :增加一个新的用户组 groupdel 用户组:要删除一个已有的用户组 groupmod 选项 用户组 : 修改用户组的属性 4.8 其他常用命令 pwd： 显示当前所在位置 grep 要搜索的字符串 要搜索的文件 --color： 搜索命令，–color代表高亮显示 ps -ef/ps -aux： 这两个命令都是查看当前系统正在运行进程，两者的区别是展示格式不同。如果想要查看特定的进程可以使用这样的格式：ps aux|grep redis （查看包括redis字符串的进程），也可使用 pgrep redis -a。 注意：如果直接用ps（（Process Status））命令，会显示所有进程的状态，通常结合grep命令查看某进程的状态。 kill -9 进程的pid： 杀死进程（-9 表示强制终止。） 先用ps查找进程，然后用kill杀掉 网络通信命令： 查看当前系统的网卡信息：ifconfig 查看与某台机器的连接情况：ping 查看当前系统的端口使用：netstat -an net-tools 和 iproute2 ： net-tools起源于BSD的TCP/IP工具箱，后来成为老版本Linux内核中配置网络功能的工具。但自2001年起，Linux社区已经对其停止维护。同时，一些Linux发行版比如Arch Linux和CentOS/RHEL 7则已经完全抛弃了net-tools，只支持iproute2。linux ip命令类似于ifconfig，但功能更强大，旨在替代它。更多详情请阅读如何在Linux中使用IP命令和示例 shutdown： shutdown -h now： 指定现在立即关机；shutdown +5 &quot;System will shutdown after 5 minutes&quot;：指定5分钟后关机，同时送出警告信息给登入用户。 reboot： reboot： 重开机。reboot -w： 做个重开机的模拟（只有纪录并不会真的重开机）。]]></content>
+    <title><![CDATA[《深入理解计算机系统》 day01]]></title>
+    <url>%2F2017%2F12%2F20%2F%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%8B%20day01%2F</url>
+    <content type="text"><![CDATA[预处理阶段预处理器（cpp）识别以#字符开头的指令 修改源程序，比如#iclude&lt;stdio.h&gt;告诉预处理器读取系统头文件stdio.h的内容并把它插入程序文本中就得到另一个C程序，以 .i 为文件扩展名 编译阶段编译器（ccl）将hello.i翻译成文本文件hello.s，它包含一个汇编程序，每条语句都以一种文本格式描述了一条低级的机器语言指令 汇编阶段接下来汇编器（as）将hello.s翻译成机器语言指令，并将结果打包在一个二进制文件 hello.o 中 链接阶段将程序中需要用到的函数，例如printf，从printf.o包中用链接器（ld）合并到hello.o程序中得到一个hello文件，加载到内存中交给系统执行。]]></content>
       <categories>
-        <category>服务器</category>
+        <category>读书笔记</category>
       </categories>
       <tags>
-        <tag>服务器</tag>
-        <tag>操作系统</tag>
-        <tag>Linux</tag>
+        <tag>计算机基础</tag>
+        <tag>读书笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -313,6 +325,54 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[选择排序]]></title>
+    <url>%2F2017%2F09%2F02%2F%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[思路首先，找到数组中最小的元素，拎出来，将它和数组的第一个元素交换位置，第二步，在剩下的元素中继续寻找最小的元素，拎出来，和数组的第二个元素交换位置，如此循环，直到整个数组排序完成。 至于选大还是选小，这个都无所谓，你也可以每次选择最大的拎出来排，也可以每次选择最小的拎出来的排，只要你的排序的手段是这种方式，都叫选择排序。代码实现 1234567891011121314public static void sort(int arr[])&#123; for( int i = 0;i &lt; arr.length ; i++ )&#123; int min = i;//最小元素的下标 for(int j = i + 1;j &lt; arr.length ; j++ )&#123; if(arr[j] &lt; arr[min])&#123; min = j;//找最小值 &#125; &#125; //交换位置 int temp = arr[i]; arr[i] = arr[min]; arr[min] = temp; &#125;&#125; 双层循环，时间复杂度和冒泡一模一样，都是O(n2)。]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>选择排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[希尔排序]]></title>
+    <url>%2F2017%2F09%2F02%2F%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[希尔排序这个名字，来源于它的发明者希尔，也称作“缩小增量排序”，是插入排序的一种更高效的改进版本。 我们知道，插入排序对于大规模的乱序数组的时候效率是比较慢的，因为它每次只能将数据移动一位，希尔排序为了加快插入的速度，让数据移动的时候可以实现跳跃移动，节省了一部分的时间开支。 代码实现 123456789101112131415161718192021public static void sort(int[] arr) &#123; int length = arr.length; //区间 int gap = 1; while (gap &lt; length) &#123; gap = gap * 3 + 1; &#125; while (gap &gt; 0) &#123; for (int i = gap; i &lt; length; i++) &#123; int tmp = arr[i]; int j = i - gap; //跨区间排序 while (j &gt;= 0 &amp;&amp; arr[j] &gt; tmp) &#123; arr[j + gap] = arr[j]; j -= gap; &#125; arr[j + gap] = tmp; &#125; gap = gap / 3; &#125;&#125; 可能你会问为什么区间要以 gap = gap*3 + 1 去计算，其实最优的区间计算方法是没有答案的，这是一个长期未解决的问题，不过差不多都会取在二分之一到三分之一附近。]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>希尔排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[堆排序]]></title>
+    <url>%2F2017%2F09%2F01%2F%E5%A0%86%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[堆排序顾名思义，是利用堆这种数据结构来进行排序的算法。 如果你不了解堆这种数据结构，可以查看小吴之前的数据结构系列文章—看动画轻松理解堆 如果你了解堆这种数据结构，你应该知道堆是一种优先队列，两种实现，最大堆和最小堆，由于我们这里排序按升序排，所以就直接以最大堆来说吧。 我们完全可以把堆（以下全都默认为最大堆）看成一棵完全二叉树，但是位于堆顶的元素总是整棵树的最大值，每个子节点的值都比父节点小，由于堆要时刻保持这样的规则特性，所以一旦堆里面的数据发生变化，我们必须对堆重新进行一次构建。 既然堆顶元素永远都是整棵树中的最大值，那么我们将数据构建成堆后，只需要从堆顶取元素不就好了吗？ 第一次取的元素，是否取的就是最大值？取完后把堆重新构建一下，然后再取堆顶的元素，是否取的就是第二大的值？ 反复的取，取出来的数据也就是有序的数据。 代码实现1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253public static void sort(int[] arr) &#123; int length = arr.length; //构建堆 buildHeap(arr， length); for ( int i = length - 1; i &gt; 0; i-- ) &#123; //将堆顶元素与末位元素调换 int temp = arr[0]; arr[0] = arr[i]; arr[i] = temp; //数组长度-1 隐藏堆尾元素 length--; //将堆顶元素下沉 目的是将最大的元素浮到堆顶来 sink(arr， 0， length); &#125;&#125;private static void buildHeap(int[] arr， int length) &#123; for (int i = length / 2; i &gt;= 0; i--) &#123; sink(arr， i， length); &#125;&#125;/** * 下沉调整 * @param arr 数组 * @param index 调整位置 * @param length 数组范围 */private static void sink(int[] arr， int index， int length) &#123; int leftChild = 2 * index + 1;//左子节点下标 int rightChild = 2 * index + 2;//右子节点下标 int present = index;//要调整的节点下标 //下沉左边 if (leftChild &lt; length &amp;&amp; arr[leftChild] &gt; arr[present]) &#123; present = leftChild; &#125; //下沉右边 if (rightChild &lt; length &amp;&amp; arr[rightChild] &gt; arr[present]) &#123; present = rightChild; &#125; //如果下标不相等 证明调换过了 if (present != index) &#123; //交换值 int temp = arr[index]; arr[index] = arr[present]; arr[present] = temp; //继续下沉 sink(arr， present， length); &#125;&#125; 堆排序和快速排序的时间复杂度都一样是 O(nlogn)]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>堆排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[冒泡排序]]></title>
+    <url>%2F2017%2F09%2F01%2F%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[冒泡排序 冒泡排序无疑是最为出名的排序算法之一，从序列的一端开始往另一端冒泡（你可以从左往右冒泡，也可以从右往左冒泡，看心情），依次比较相邻的两个数的大小（到底是比大还是比小也看你心情）。 冒泡的代码还是相当简单的，两层循环，外层冒泡轮数，里层依次比较，江湖中人人尽皆知。 123456789101112public static void sort(int arr[])&#123; for( int i = 0 ; i &lt; arr.length - 1 ; i++ )&#123; for(int j = 0;j &lt; arr.length - 1 - i ; j++)&#123; int temp = 0; if(arr[j] &lt; arr[j + 1])&#123; temp = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = temp; &#125; &#125; &#125;&#125; 我们看到嵌套循环，应该立马就可以得出这个算法的时间复杂度为O(n2)。]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>冒泡排序</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Docker概览]]></title>
     <url>%2F2017%2F09%2F01%2FDocker%E6%A6%82%E8%A7%88%2F</url>
     <content type="text"><![CDATA[本文只是对Docker的概念做了较为详细的介绍，并不涉及一些像Docker环境的安装以及Docker的一些常见操作和命令。 Docker 是世界领先的软件容器平台，所以想要搞懂Docker的概念我们必须先从容器开始说起。 一 先从认识容器开始1.1 什么是容器?先来看看容器较为官方的解释一句话概括容器：容器就是将软件打包成标准化单元，以用于开发、交付和部署。 容器镜像是轻量的、可执行的独立软件包 ，包含软件运行所需的所有内容：代码、运行时环境、系统工具、系统库和设置。 容器化软件适用于基于Linux和Windows的应用，在任何环境中都能够始终如一地运行。 容器赋予了软件独立性 ，使其免受外在环境差异（例如，开发和预演环境的差异）的影响，从而有助于减少团队间在相同基础设施上运行不同软件时的冲突。 再来看看容器较为通俗的解释如果需要通俗的描述容器的话，我觉得容器就是一个存放东西的地方，就像书包可以装各种文具、衣柜可以放各种衣服、鞋架可以放各种鞋子一样。我们现在所说的容器存放的东西可能更偏向于应用比如网站、程序甚至是系统环境。 1.2 图解物理机,虚拟机与容器关于虚拟机与容器的对比在后面会详细介绍到，这里只是通过网上的图片加深大家对于物理机、虚拟机与容器这三者的理解。 物理机 虚拟机： 容器： 通过上面这三张抽象图，我们可以大概可以通过类比概括出： 容器虚拟化的是操作系统而不是硬件，容器之间是共享同一套操作系统资源的。虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统。因此容器的隔离级别会稍低一些。 相信通过上面的解释大家对于容器这个既陌生又熟悉的概念有了一个初步的认识，下面我们就来谈谈Docker的一些概念。 二 再来谈谈 Docker 的一些概念 2.1 什么是 Docker?说实话关于Docker是什么并太好说，下面我通过四点向你说明Docker到底是个什么东西。 Docker 是世界领先的软件容器平台。 Docker 使用 Google 公司推出的 Go 语言 进行开发实现，基于 Linux 内核 的cgroup，namespace，以及AUFS类的UnionFS等技术，对进程进行封装隔离，属于操作系统层面的虚拟化技术。 由于隔离的进程独立于宿主和其它的隔离的进程，因此也称其为容器。Docke最初实现是基于 LXC. Docker 能够自动执行重复性任务，例如搭建和配置开发环境，从而解放了开发人员以便他们专注在真正重要的事情上：构建杰出的软件。 用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。 2.2 Docker 思想 集装箱 标准化： ①运输方式 ② 存储方式 ③ API接口 隔离 2.3 Docker 容器的特点 轻量在一台机器上运行的多个 Docker 容器可以共享这台机器的操作系统内核；它们能够迅速启动，只需占用很少的计算和内存资源。镜像是通过文件系统层进行构造的，并共享一些公共文件。这样就能尽量降低磁盘用量，并能更快地下载镜像。 标准Docker 容器基于开放式标准，能够在所有主流 Linux 版本、Microsoft Windows 以及包括 VM、裸机服务器和云在内的任何基础设施上运行。 安全Docker 赋予应用的隔离性不仅限于彼此隔离，还独立于底层的基础设施。Docker 默认提供最强的隔离，因此应用出现问题，也只是单个容器的问题，而不会波及到整台机器。 2.4 为什么要用 Docker ? Docker 的镜像提供了除内核外完整的运行时环境，确保了应用运行环境一致性，从而不会再出现 “这段代码在我机器上没问题啊” 这类问题；——一致的运行环境 可以做到秒级、甚至毫秒级的启动时间。大大的节约了开发、测试、部署的时间。——更快速的启动时间 避免公用的服务器，资源会容易受到其他用户的影响。——隔离性 善于处理集中爆发的服务器使用压力；——弹性伸缩，快速扩展 可以很轻易的将在一个平台上运行的应用，迁移到另一个平台上，而不用担心运行环境的变化导致应用无法正常运行的情况。——迁移方便 使用 Docker 可以通过定制应用镜像来实现持续集成、持续交付、部署。——持续交付和部署 每当说起容器，我们不得不将其与虚拟机做一个比较。就我而言，对于两者无所谓谁会取代谁，而是两者可以和谐共存。 三 容器 VS 虚拟机 简单来说： 容器和虚拟机具有相似的资源隔离和分配优势，但功能有所不同，因为容器虚拟化的是操作系统，而不是硬件，因此容器更容易移植，效率也更高。 3.1 两者对比图 传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，在该系统上再运行所需应用进程；而容器内的应用进程直接运行于宿主的内核，容器内没有自己的内核，而且也没有进行硬件虚拟。因此容器要比传统虚拟机更为轻便. 3.2 容器与虚拟机总结 容器是一个应用层抽象，用于将代码和依赖资源打包在一起。 多个容器可以在同一台机器上运行，共享操作系统内核，但各自作为独立的进程在用户空间中运行 。与虚拟机相比， 容器占用的空间较少（容器镜像大小通常只有几十兆），瞬间就能完成启动 。 虚拟机 (VM) 是一个物理硬件层抽象，用于将一台服务器变成多台服务器。 管理程序允许多个 VM 在一台机器上运行。每个VM都包含一整套操作系统、一个或多个应用、必要的二进制文件和库资源，因此 占用大量空间 。而且 VM 启动也十分缓慢 。 通过Docker官网，我们知道了这么多Docker的优势，但是大家也没有必要完全否定虚拟机技术，因为两者有不同的使用场景。虚拟机更擅长于彻底隔离整个运行环境。例如，云服务提供商通常采用虚拟机技术隔离不同的用户。而 Docker通常用于隔离不同的应用 ，例如前端，后端以及数据库。 3.3 容器与虚拟机两者是可以共存的就我而言，对于两者无所谓谁会取代谁，而是两者可以和谐共存。 Docker中非常重要的三个基本概念，理解了这三个概念，就理解了 Docker 的整个生命周期。 四 Docker基本概念Docker 包括三个基本概念 镜像（Image） 容器（Container） 仓库（Repository） 理解了这三个概念，就理解了 Docker 的整个生命周期 4.1 镜像(Image):一个特殊的文件系统 操作系统分为内核和用户空间。对于 Linux 而言，内核启动后，会挂载 root 文件系统为其提供用户空间支持。而Docker 镜像（Image），就相当于是一个 root 文件系统。 Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。 镜像不包含任何动态数据，其内容在构建之后也不会被改变。 Docker 设计时，就充分利用 Union FS的技术，将其设计为 分层存储的架构 。 镜像实际是由多层文件系统联合组成。 镜像构建时，会一层层构建，前一层是后一层的基础。每一层构建完就不会再发生改变，后一层上的任何改变只发生在自己这一层。 比如，删除前一层文件的操作，实际不是真的删除前一层的文件，而是仅在当前层标记为该文件已删除。在最终容器运行的时候，虽然不会看到这个文件，但是实际上该文件会一直跟随镜像。因此，在构建镜像的时候，需要额外小心，每一层尽量只包含该层需要添加的东西，任何额外的东西应该在该层构建结束前清理掉。 分层存储的特征还使得镜像的复用、定制变的更为容易。甚至可以用之前构建好的镜像作为基础层，然后进一步添加新的层，以定制自己所需的内容，构建新的镜像。 4.2 容器(Container):镜像运行时的实体 镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的 类 和 实例 一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等 。 容器的实质是进程，但与直接在宿主执行的进程不同，容器进程运行于属于自己的独立的 命名空间。前面讲过镜像使用的是分层存储，容器也是如此。 容器存储层的生存周期和容器一样，容器消亡时，容器存储层也随之消亡。因此，任何保存于容器存储层的信息都会随容器删除而丢失。 按照 Docker 最佳实践的要求，容器不应该向其存储层内写入任何数据 ，容器存储层要保持无状态化。所有的文件写入操作，都应该使用数据卷（Volume）、或者绑定宿主目录，在这些位置的读写会跳过容器存储层，直接对宿主(或网络存储)发生读写，其性能和稳定性更高。数据卷的生存周期独立于容器，容器消亡，数据卷不会消亡。因此， 使用数据卷后，容器可以随意删除、重新 run ，数据却不会丢失。 4.3仓库(Repository):集中存放镜像文件的地方 镜像构建完成后，可以很容易的在当前宿主上运行，但是， 如果需要在其它服务器上使用这个镜像，我们就需要一个集中的存储、分发镜像的服务，Docker Registry就是这样的服务。 一个 Docker Registry中可以包含多个仓库（Repository）；每个仓库可以包含多个标签（Tag）；每个标签对应一个镜像。所以说：镜像仓库是Docker用来集中存放镜像文件的地方类似于我们之前常用的代码仓库。 通常，一个仓库会包含同一个软件不同版本的镜像，而标签就常用于对应该软件的各个版本 。我们可以通过&lt;仓库名&gt;:&lt;标签&gt;的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以 latest 作为默认标签.。 这里补充一下Docker Registry 公开服务和私有 Docker Registry的概念： Docker Registry 公开服务 是开放给用户使用、允许用户管理镜像的 Registry 服务。一般这类公开服务允许用户免费上传、下载公开的镜像，并可能提供收费服务供用户管理私有镜像。 最常使用的 Registry 公开服务是官方的 Docker Hub ，这也是默认的 Registry，并拥有大量的高质量的官方镜像，网址为：https://hub.docker.com/ 。在国内访问Docker Hub 可能会比较慢国内也有一些云服务商提供类似于 Docker Hub 的公开服务。比如 时速云镜像库、网易云镜像服务、DaoCloud 镜像市场、阿里云镜像库等。 除了使用公开服务外，用户还可以在 本地搭建私有 Docker Registry 。Docker 官方提供了 Docker Registry 镜像，可以直接使用做为私有 Registry 服务。开源的 Docker Registry 镜像只提供了 Docker Registry API 的服务端实现，足以支持 docker 命令，不影响使用。但不包含图形界面，以及镜像维护、用户管理、访问控制等高级功能。 Docker的概念基本上已经讲完，最后我们谈谈：Build, Ship, and Run。 五 最后谈谈:Build Ship and Run如果你搜索Docker官网，会发现如下的字样：“Docker - Build, Ship, and Run Any App, Anywhere”。那么Build, Ship, and Run到底是在干什么呢？ Build（构建镜像） ： 镜像就像是集装箱包括文件以及运行环境等等资源。 Ship（运输镜像） ：主机和仓库间运输，这里的仓库就像是超级码头一样。 Run （运行镜像） ：运行的镜像就是一个容器，容器就是运行程序的地方。 Docker 运行过程也就是去仓库把镜像拉到本地，然后用一条命令把镜像运行起来变成容器。所以，我们也常常将Docker称为码头工人或码头装卸工，这和Docker的中文翻译搬运工人如出一辙。 六 总结本文主要把Docker中的一些常见概念做了详细的阐述，但是并不涉及Docker的安装、镜像的使用、容器的操作等内容。这部分东西，希望读者自己可以通过阅读书籍与官方文档的形式掌握。如果觉得官方文档阅读起来很费力的话，这里推荐一本书籍《Docker技术入门与实战第二版》。]]></content>
@@ -322,6 +382,18 @@
       <tags>
         <tag>Docker</tag>
         <tag>微服务</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[插入排序]]></title>
+    <url>%2F2017%2F09%2F01%2F%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[思想 插入排序的思想和我们打扑克摸牌的时候一样，从牌堆里一张一张摸起来的牌都是乱序的，我们会把摸起来的牌插入到左手中合适的位置，让左手中的牌时刻保持一个有序的状态。 那如果我们不是从牌堆里摸牌，而是左手里面初始化就是一堆乱牌呢？ 一样的道理，我们把牌往手的右边挪一挪，把手的左边空出一点位置来，然后在乱牌中抽一张出来，插入到左边，再抽一张出来，插入到左边，再抽一张，插入到左边，每次插入都插入到左边合适的位置，时刻保持左边的牌是有序的，直到右边的牌抽完，则排序完毕。 代码实现 123456789101112131415public static void sort(int[] arr) &#123; int n = arr.length; for (int i = 1; i &lt; n; ++i) &#123; int value = arr[i]; int j = 0;//插入的位置 for (j = i-1; j &gt;= 0; j--) &#123; if (arr[j] &gt; value) &#123; arr[j+1] = arr[j];//移动数据 &#125; else &#123; break; &#125; &#125; arr[j+1] = value; //插入数据 &#125;&#125; 从代码里我们可以看出，如果找到了合适的位置，就不会再进行比较了，就好比牌堆里抽出的一张牌本身就比我手里的牌都小，那么我只需要直接放在末尾就行了，不用一个一个去移动数据腾出位置插入到中间。 所以说，最好情况的时间复杂度是 O(n)，最坏情况的时间复杂度是 O(n2)，然而时间复杂度这个指标看的是最坏的情况，而不是最好的情况，所以插入排序的时间复杂度是 O(n2)。]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>插入排序</tag>
       </tags>
   </entry>
   <entry>
@@ -368,6 +440,18 @@
       </categories>
       <tags>
         <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[单例模式]]></title>
+    <url>%2F2017%2F06%2F07%2F%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%2F</url>
+    <content type="text"><![CDATA[单例模式是 确保一个类只有一个实例，自行实例化并向系统提供这个实例一个类只有一个实例对象，避免了重复实例的频繁创建和销毁降低了资源消耗并且共用一个对象有利于数据同步，例如WINDOWS的任务管理器、回收站、网站的计数器、线程池对象、配置文件的读取对象等两种创建方式：1.饿汉单例模式（最常用）： 单例实例在类装载时就构建，急切初始化。（预先加载法）特点：线程安全、在类加载的同时已经创建好一个静态对象，调用时反应速度快，有可能从没用到，有一点点的资源浪费 123456789101112//饿汉单例模式Demo public class SingletonTest &#123; //1.私有化该类的构造方法（不让别人new，只能自己new） private SingletonTest() &#123; &#125; //2.自己内部new一个对象 public static SingletonTest instance = new SingletonTest(); //3.给一个get方法，让外界取它 public SingletonTest getInstance() &#123; return instance; &#125; &#125; ​ 2.懒汉单例模式： 单例实例在第一次被使用时构建，延迟初始化。 12345678910111213141516//懒汉单例模式Demo public class SingletonTest2 &#123; //1.私有化该类的构造方法（不让别人new，只能自己new） private SingletonTest2() &#123; &#125; //2.自己内部维护一个null对象（只要被调用一次就不再是了） public static SingletonTest2 instance = null; //3.给一个get方法，让外界取它，只有有人用才会new一个对象出来 public SingletonTest2 getInstance() &#123; if (instance == null) &#123; //TODO 多线程下可能会出现重复new的情况 instance = new SingletonTest2(); &#125; return instance; &#125; &#125; ​总结： 两种模式各有所长 一种是时间换空间 一种是空间换时间 根据具体场景使用]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -441,18 +525,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[单例模式]]></title>
-    <url>%2F2016%2F06%2F07%2F%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%2F</url>
-    <content type="text"><![CDATA[单例模式是 确保一个类只有一个实例，自行实例化并向系统提供这个实例一个类只有一个实例对象，避免了重复实例的频繁创建和销毁降低了资源消耗并且共用一个对象有利于数据同步，例如WINDOWS的任务管理器、回收站、网站的计数器、线程池对象、配置文件的读取对象等两种创建方式：1.饿汉单例模式（最常用）： 单例实例在类装载时就构建，急切初始化。（预先加载法）特点：线程安全、在类加载的同时已经创建好一个静态对象，调用时反应速度快，有可能从没用到，有一点点的资源浪费 123456789101112//饿汉单例模式Demo public class SingletonTest &#123; //1.私有化该类的构造方法（不让别人new，只能自己new） private SingletonTest() &#123; &#125; //2.自己内部new一个对象 public static SingletonTest instance = new SingletonTest(); //3.给一个get方法，让外界取它 public SingletonTest getInstance() &#123; return instance; &#125; &#125; ​ 2.懒汉单例模式： 单例实例在第一次被使用时构建，延迟初始化。 12345678910111213141516//懒汉单例模式Demo public class SingletonTest2 &#123; //1.私有化该类的构造方法（不让别人new，只能自己new） private SingletonTest2() &#123; &#125; //2.自己内部维护一个null对象（只要被调用一次就不再是了） public static SingletonTest2 instance = null; //3.给一个get方法，让外界取它，只有有人用才会new一个对象出来 public SingletonTest2 getInstance() &#123; if (instance == null) &#123; //TODO 多线程下可能会出现重复new的情况 instance = new SingletonTest2(); &#125; return instance; &#125; &#125; ​总结： 两种模式各有所长 一种是时间换空间 一种是空间换时间 根据具体场景使用]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Spring相关知识点总结]]></title>
     <url>%2F2016%2F05%2F01%2FSpring%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93%2F</url>
     <content type="text"><![CDATA[Spring是什么 Spring是一个一站式轻量级的开源框架Spring Bean的三种配置方式：xml、注解和Java @Configuration public class BeanConfig { @Bean public BeanFactory beanFactory(){ return new BeanFactoryImpl(); } }Spring的核心： 控制反转（IoC）和面向切面（AOP） AOP代理主要分为静态代理和动态代理 AOP实现的关键在于 代理模式，AOP代理主要分为静态代理和动态代理。静态代理的代表为AspectJ； 动态代理则以Spring AOP为代表。 （1）AspectJ是静态代理的增强，所谓静态代理，就是AOP框架会在编译阶段生成AOP代理类 因此也称为编译时增强，他会在编译阶段将AspectJ(切面)织入到Java字节码中 运行的时候就是增强之后的AOP对象。 （2）Spring AOP使用的动态代理，所谓的动态代理就是说AOP框架不会去修改字节码 而是每次运行时在内存中临时为方法生成一个AOP对象 这个AOP对象包含了目标对象的全部方法 并且在特定的切点做了增强处理，并回调原对象的方法。Spring中AOP动态代理的两种实现方式： JDK动态代理和CGLIB动态代理 Spring的优点： Spring将对象之间的依赖关系交由框架处理，减低组件的耦合性； Spring对于主流的应用框架提供了非常方便的集成支持； Spring提供的AOP功能，方便进行面向切面的编程，许多不容易用传统OOP实现的功能可以通过AOP轻松应付； Spring框架设计精妙，Spring源码是经典的学习范例Spring的七大组成模块： Spring Core：核心类库，提供IOC服务； Spring Context：提供框架式的Bean访问方式，以及企业级功能（JNDI、定时任务等）； Spring AOP：AOP服务； Spring DAO：对JDBC的抽象，简化了数据访问异常的处理； Spring ORM：对现有的ORM框架的支持； Spring Web：提供了基本的面向Web的综合特性，例如多方文件上传； Spring MVC：提供面向Web应用的Model-View-Controller实现 Spring事务的实现方式和实现原理： Spring事务的本质其实就是数据库对事务的支持 没有数据库的事务支持，spring是无法提供事务功能的。 真正的数据库层的事务提交和回滚是通过binlog或者redo log实现的。Spring的IOC有三种注入方式 ： 构造器注入、setter方法注入、注解注入 Spring框架支持以下五种bean的作用域： singleton : bean在每个Spring ioc 容器中只有一个实例。 prototype：一个bean的定义可以有多个实例。 request：每次http请求都会创建一个bean，该作用域仅在基于web的Spring ApplicationContext情形下有效。 session：在一个HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。 global-session：在一个全局的HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。缺省的Spring bean 的作用域是Singleton. Spring支持两种类型的事务管理： 编程式事务管理：这意味你通过编程的方式管理事务，给你带来极大的灵活性，但是难维护。 声明式事务管理：这意味着你可以将业务代码和事务管理分离，你只需用注解和XML配置来管理事务。大多数Spring框架的用户选择声明式事务管理，因为它对应用代码的影响最小，因此更符合一个无侵入的轻量级容器的思想。声明式事务管理要优于编程式事务管理，虽然比编程式事务管理（这种方式允许你通过代码控制事务）少了一点灵活性。 SpringMVC 请求处理流程 1、 用户发送请求被前端控制器DispatcherServlet捕获 2、 DispatcherServlet收到请求调用处理器映射器HandlerMapping。 3、 处理器映射器找到具体的处理器(可以根据xml配置、注解进行查找)，生成映射信息 返回给DispatcherServlet。 4、 DispatcherServlet调用处理器适配器HandlerAdapter。 5、 处理器适配器根据映射信息适配调用具体的处理器(Controller，也叫后端控制器) Controller执行完成返回ModelAndView给DispatcherServlet。 6、 DispatcherServlet将ModelAndView传给ViewReslover视图解析器 ViewReslover解析后返回具体视图view。 7、 DispatcherServlet根据视图View进行渲染视图并且响应给用户。 整个过程都是以DispatcherServlet为中心进行的。 你怎样定义类的作用域? 当定义一个 在Spring里，我们还能给这个bean声明一个作用域。它可以通过bean 定义中的scope属性来定义。如，当Spring要在需要的时候每次生产一个新的bean实例，bean的scope属性被指定为prototype。 另一方面，一个bean每次使用的时候必须返回同一个实例，这个bean的scope 属性 必须设为 singleton。解释Spring支持的几种bean的作用域 Spring框架支持以下五种bean的作用域： singleton : bean在每个Spring ioc 容器中只有一个实例。 prototype ：一个bean的定义可以有多个实例。 request ：每次http请求都会创建一个bean，该作用域仅在基于web的Spring ApplicationContext情形下有效。 session ：在一个HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。 global-session ：在一个全局的HTTP Session中，一个bean定义对应一个实例。该作用域仅在基于web的Spring ApplicationContext情形下有效。缺省的Spring bean 的作用域是Singleton. Spring框架中的单例bean是线程安全的吗? 不，Spring框架中的单例bean不是线程安全的。解释Spring框架中bean的生命周期 PS：可以借鉴Servlet的生命周期，实例化、初始init、接收请求service、销毁destroy。 Spring的核心容器会首先从XML 文件中读取bean的定义，并实例化bean。 然后根据bean的定义填充所有的属性。 然后根据bean内部实现了哪些接口依次调用一堆方法，最后初始化，最后的最后destroy。 如果bean实现了BeanNameAware 接口，Spring 传递bean 的ID 到 setBeanName方法。 如果Bean 实现了 BeanFactoryAware 接口， Spring传递beanfactory 给setBeanFactory 方法。 如果有任何与bean相关联的BeanPostProcessors，Spring会在postProcesserBeforeInitialization()方法内调用它们。 如果bean实现IntializingBean了，调用它的afterPropertySet方法， 如果bean声明了初始化方法，调用此初始化方法。 如果有BeanPostProcessors 和bean 关联，这些bean的postProcessAfterInitialization() 方法将被调用。 如果bean实现了 DisposableBean，它将调用destroy()方法。 哪些是重要的bean生命周期方法？ 你能重载它们吗？ 有两个重要的bean 生命周期方法，第一个是setup ， 它是在容器加载bean的时候被调用。第二个方法是 teardown 它是在容器卸载类的时候被调用。 The bean 标签有两个重要的属性（init-method和destroy-method）。 用它们你可以自己定制初始化和注销方法。它们也有相应的注解（@PostConstruct和@PreDestroy）]]></content>
@@ -489,66 +561,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[《深入理解计算机系统》 day01]]></title>
-    <url>%2F2015%2F12%2F20%2F%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%8B%20day01%2F</url>
-    <content type="text"><![CDATA[预处理阶段预处理器（cpp）识别以#字符开头的指令 修改源程序，比如#iclude&lt;stdio.h&gt;告诉预处理器读取系统头文件stdio.h的内容并把它插入程序文本中就得到另一个C程序，以 .i 为文件扩展名 编译阶段编译器（ccl）将hello.i翻译成文本文件hello.s，它包含一个汇编程序，每条语句都以一种文本格式描述了一条低级的机器语言指令 汇编阶段接下来汇编器（as）将hello.s翻译成机器语言指令，并将结果打包在一个二进制文件 hello.o 中 链接阶段将程序中需要用到的函数，例如printf，从printf.o包中用链接器（ld）合并到hello.o程序中得到一个hello文件，加载到内存中交给系统执行。]]></content>
-      <categories>
-        <category>读书笔记</category>
-      </categories>
-      <tags>
-        <tag>计算机基础</tag>
-        <tag>读书笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[选择排序]]></title>
-    <url>%2F2015%2F09%2F02%2F%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%2F</url>
-    <content type="text"><![CDATA[思路首先，找到数组中最小的元素，拎出来，将它和数组的第一个元素交换位置，第二步，在剩下的元素中继续寻找最小的元素，拎出来，和数组的第二个元素交换位置，如此循环，直到整个数组排序完成。 至于选大还是选小，这个都无所谓，你也可以每次选择最大的拎出来排，也可以每次选择最小的拎出来的排，只要你的排序的手段是这种方式，都叫选择排序。代码实现 1234567891011121314public static void sort(int arr[])&#123; for( int i = 0;i &lt; arr.length ; i++ )&#123; int min = i;//最小元素的下标 for(int j = i + 1;j &lt; arr.length ; j++ )&#123; if(arr[j] &lt; arr[min])&#123; min = j;//找最小值 &#125; &#125; //交换位置 int temp = arr[i]; arr[i] = arr[min]; arr[min] = temp; &#125;&#125; 双层循环，时间复杂度和冒泡一模一样，都是O(n2)。]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>选择排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[希尔排序]]></title>
-    <url>%2F2015%2F09%2F02%2F%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%2F</url>
-    <content type="text"><![CDATA[希尔排序这个名字，来源于它的发明者希尔，也称作“缩小增量排序”，是插入排序的一种更高效的改进版本。 我们知道，插入排序对于大规模的乱序数组的时候效率是比较慢的，因为它每次只能将数据移动一位，希尔排序为了加快插入的速度，让数据移动的时候可以实现跳跃移动，节省了一部分的时间开支。 代码实现 123456789101112131415161718192021public static void sort(int[] arr) &#123; int length = arr.length; //区间 int gap = 1; while (gap &lt; length) &#123; gap = gap * 3 + 1; &#125; while (gap &gt; 0) &#123; for (int i = gap; i &lt; length; i++) &#123; int tmp = arr[i]; int j = i - gap; //跨区间排序 while (j &gt;= 0 &amp;&amp; arr[j] &gt; tmp) &#123; arr[j + gap] = arr[j]; j -= gap; &#125; arr[j + gap] = tmp; &#125; gap = gap / 3; &#125;&#125; 可能你会问为什么区间要以 gap = gap*3 + 1 去计算，其实最优的区间计算方法是没有答案的，这是一个长期未解决的问题，不过差不多都会取在二分之一到三分之一附近。]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>希尔排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[堆排序]]></title>
-    <url>%2F2015%2F09%2F01%2F%E5%A0%86%E6%8E%92%E5%BA%8F%2F</url>
-    <content type="text"><![CDATA[堆排序顾名思义，是利用堆这种数据结构来进行排序的算法。 如果你不了解堆这种数据结构，可以查看小吴之前的数据结构系列文章—看动画轻松理解堆 如果你了解堆这种数据结构，你应该知道堆是一种优先队列，两种实现，最大堆和最小堆，由于我们这里排序按升序排，所以就直接以最大堆来说吧。 我们完全可以把堆（以下全都默认为最大堆）看成一棵完全二叉树，但是位于堆顶的元素总是整棵树的最大值，每个子节点的值都比父节点小，由于堆要时刻保持这样的规则特性，所以一旦堆里面的数据发生变化，我们必须对堆重新进行一次构建。 既然堆顶元素永远都是整棵树中的最大值，那么我们将数据构建成堆后，只需要从堆顶取元素不就好了吗？ 第一次取的元素，是否取的就是最大值？取完后把堆重新构建一下，然后再取堆顶的元素，是否取的就是第二大的值？ 反复的取，取出来的数据也就是有序的数据。 代码实现1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253public static void sort(int[] arr) &#123; int length = arr.length; //构建堆 buildHeap(arr， length); for ( int i = length - 1; i &gt; 0; i-- ) &#123; //将堆顶元素与末位元素调换 int temp = arr[0]; arr[0] = arr[i]; arr[i] = temp; //数组长度-1 隐藏堆尾元素 length--; //将堆顶元素下沉 目的是将最大的元素浮到堆顶来 sink(arr， 0， length); &#125;&#125;private static void buildHeap(int[] arr， int length) &#123; for (int i = length / 2; i &gt;= 0; i--) &#123; sink(arr， i， length); &#125;&#125;/** * 下沉调整 * @param arr 数组 * @param index 调整位置 * @param length 数组范围 */private static void sink(int[] arr， int index， int length) &#123; int leftChild = 2 * index + 1;//左子节点下标 int rightChild = 2 * index + 2;//右子节点下标 int present = index;//要调整的节点下标 //下沉左边 if (leftChild &lt; length &amp;&amp; arr[leftChild] &gt; arr[present]) &#123; present = leftChild; &#125; //下沉右边 if (rightChild &lt; length &amp;&amp; arr[rightChild] &gt; arr[present]) &#123; present = rightChild; &#125; //如果下标不相等 证明调换过了 if (present != index) &#123; //交换值 int temp = arr[index]; arr[index] = arr[present]; arr[present] = temp; //继续下沉 sink(arr， present， length); &#125;&#125; 堆排序和快速排序的时间复杂度都一样是 O(nlogn)]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>堆排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[冒泡排序]]></title>
-    <url>%2F2015%2F09%2F01%2F%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%2F</url>
-    <content type="text"><![CDATA[冒泡排序 冒泡排序无疑是最为出名的排序算法之一，从序列的一端开始往另一端冒泡（你可以从左往右冒泡，也可以从右往左冒泡，看心情），依次比较相邻的两个数的大小（到底是比大还是比小也看你心情）。 冒泡的代码还是相当简单的，两层循环，外层冒泡轮数，里层依次比较，江湖中人人尽皆知。 123456789101112public static void sort(int arr[])&#123; for( int i = 0 ; i &lt; arr.length - 1 ; i++ )&#123; for(int j = 0;j &lt; arr.length - 1 - i ; j++)&#123; int temp = 0; if(arr[j] &lt; arr[j + 1])&#123; temp = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = temp; &#125; &#125; &#125;&#125; 我们看到嵌套循环，应该立马就可以得出这个算法的时间复杂度为O(n2)。]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>冒泡排序</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[快速排序]]></title>
     <url>%2F2015%2F09%2F01%2F%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%2F</url>
     <content type="text"><![CDATA[快速排序的核心思想也是分治法，分而治之。它的实现方式是每次从序列中选出一个基准值，其他数依次和基准值做比较，比基准值大的放右边，比基准值小的放左边，然后再对左边和右边的两组数分别选出一个基准值，进行同样的比较移动，重复步骤，直到最后都变成单个元素，整个数组就成了有序的序列。 快速排序的关键之处在于切分，切分的同时要进行比较和移动，这里介绍一种叫做单边扫描的做法。 我们随意抽取一个数作为基准值，同时设定一个标记 mark 代表左边序列最右侧的下标位置，当然初始为 0 ，接下来遍历数组，如果元素大于基准值，无操作，继续遍历，如果元素小于基准值，则把 mark + 1 ，再将 mark 所在位置的元素和遍历到的元素交换位置，mark 这个位置存储的是比基准值小的数据，当遍历结束后，将基准值与 mark 所在元素交换位置即可。 代码实现：1234567891011121314151617181920212223242526272829303132public static void sort(int[] arr) &#123; sort(arr， 0， arr.length - 1);&#125;private static void sort(int[] arr， int startIndex， int endIndex) &#123; if (endIndex &lt;= startIndex) &#123; return; &#125; //切分 int pivotIndex = partitionV2(arr， startIndex， endIndex); sort(arr， startIndex， pivotIndex-1); sort(arr， pivotIndex+1， endIndex);&#125;private static int partition(int[] arr， int startIndex， int endIndex) &#123; int pivot = arr[startIndex];//取基准值 int mark = startIndex;//Mark初始化为起始下标 for(int i=startIndex+1; i&lt;=endIndex; i++)&#123; if(arr[i]&lt;pivot)&#123; //小于基准值 则mark+1，并交换位置。 mark ++; int p = arr[mark]; arr[mark] = arr[i]; arr[i] = p; &#125; &#125; //基准值与mark对应元素调换位置 arr[startIndex] = arr[mark]; arr[mark] = pivot; return mark;&#125; 极端情况快速排序的时间复杂度和归并排序一样，O(n log n)，但这是建立在每次切分都能把数组一刀切两半差不多大的前提下，如果出现极端情况，比如排一个有序的序列，如[ 9，8，7，6，5，4，3，2，1 ]，选取基准值 9 ，那么需要切分 n - 1 次才能完成整个快速排序的过程，这种情况下，时间复杂度就退化成了 O(n2)，当然极端情况出现的概率也是比较低的。 所以说，快速排序的时间复杂度是 O(nlogn)，极端情况下会退化成 O(n2)，为了避免极端情况的发生，选取基准值应该做到随机选取，或者是打乱一下数组再选取。 另外，快速排序的空间复杂度为 O(1)。]]></content>
@@ -558,18 +570,6 @@
       <tags>
         <tag>算法</tag>
         <tag>快速排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[插入排序]]></title>
-    <url>%2F2015%2F09%2F01%2F%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%2F</url>
-    <content type="text"><![CDATA[思想 插入排序的思想和我们打扑克摸牌的时候一样，从牌堆里一张一张摸起来的牌都是乱序的，我们会把摸起来的牌插入到左手中合适的位置，让左手中的牌时刻保持一个有序的状态。 那如果我们不是从牌堆里摸牌，而是左手里面初始化就是一堆乱牌呢？ 一样的道理，我们把牌往手的右边挪一挪，把手的左边空出一点位置来，然后在乱牌中抽一张出来，插入到左边，再抽一张出来，插入到左边，再抽一张，插入到左边，每次插入都插入到左边合适的位置，时刻保持左边的牌是有序的，直到右边的牌抽完，则排序完毕。 代码实现 123456789101112131415public static void sort(int[] arr) &#123; int n = arr.length; for (int i = 1; i &lt; n; ++i) &#123; int value = arr[i]; int j = 0;//插入的位置 for (j = i-1; j &gt;= 0; j--) &#123; if (arr[j] &gt; value) &#123; arr[j+1] = arr[j];//移动数据 &#125; else &#123; break; &#125; &#125; arr[j+1] = value; //插入数据 &#125;&#125; 从代码里我们可以看出，如果找到了合适的位置，就不会再进行比较了，就好比牌堆里抽出的一张牌本身就比我手里的牌都小，那么我只需要直接放在末尾就行了，不用一个一个去移动数据腾出位置插入到中间。 所以说，最好情况的时间复杂度是 O(n)，最坏情况的时间复杂度是 O(n2)，然而时间复杂度这个指标看的是最坏的情况，而不是最好的情况，所以插入排序的时间复杂度是 O(n2)。]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>插入排序</tag>
       </tags>
   </entry>
 </search>

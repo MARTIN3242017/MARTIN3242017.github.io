@@ -94,20 +94,20 @@
 
 
 
-  <meta name="description" content="堆排序顾名思义，是利用堆这种数据结构来进行排序的算法。 如果你不了解堆这种数据结构，可以查看小吴之前的数据结构系列文章—看动画轻松理解堆  如果你了解堆这种数据结构，你应该知道堆是一种优先队列，两种实现，最大堆和最小堆，由于我们这里排序按升序排，所以就直接以最大堆来说吧。 我们完全可以把堆（以下全都默认为最大堆）看成一棵完全二叉树，但是位于堆顶的元素总是整棵树的最大值，每个子节点的值都比父节点小，">
-<meta name="keywords" content="算法,堆排序">
+  <meta name="description" content="冒泡排序 冒泡排序无疑是最为出名的排序算法之一，从序列的一端开始往另一端冒泡（你可以从左往右冒泡，也可以从右往左冒泡，看心情），依次比较相邻的两个数的大小（到底是比大还是比小也看你心情）。 冒泡的代码还是相当简单的，两层循环，外层冒泡轮数，里层依次比较，江湖中人人尽皆知。 123456789101112public static void sort(int arr[])&amp;#123;    for(">
+<meta name="keywords" content="算法,冒泡排序">
 <meta property="og:type" content="article">
-<meta property="og:title" content="堆排序">
-<meta property="og:url" content="https://martin3242017.github.io/2015/09/01/堆排序/index.html">
+<meta property="og:title" content="冒泡排序">
+<meta property="og:url" content="https://martin3242017.github.io/2017/09/01/冒泡排序/index.html">
 <meta property="og:site_name" content="WANKAI&#39;S BLOG">
-<meta property="og:description" content="堆排序顾名思义，是利用堆这种数据结构来进行排序的算法。 如果你不了解堆这种数据结构，可以查看小吴之前的数据结构系列文章—看动画轻松理解堆  如果你了解堆这种数据结构，你应该知道堆是一种优先队列，两种实现，最大堆和最小堆，由于我们这里排序按升序排，所以就直接以最大堆来说吧。 我们完全可以把堆（以下全都默认为最大堆）看成一棵完全二叉树，但是位于堆顶的元素总是整棵树的最大值，每个子节点的值都比父节点小，">
+<meta property="og:description" content="冒泡排序 冒泡排序无疑是最为出名的排序算法之一，从序列的一端开始往另一端冒泡（你可以从左往右冒泡，也可以从右往左冒泡，看心情），依次比较相邻的两个数的大小（到底是比大还是比小也看你心情）。 冒泡的代码还是相当简单的，两层循环，外层冒泡轮数，里层依次比较，江湖中人人尽皆知。 123456789101112public static void sort(int arr[])&amp;#123;    for(">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190708224140618.gif">
-<meta property="og:updated_time" content="2019-07-08T14:44:13.000Z">
+<meta property="og:image" content=" https://user-images.githubusercontent.com/17243165/28749710-5213c280-7503-11e7-977e-7c0616e3b582.gif">
+<meta property="og:updated_time" content="2019-07-13T10:28:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="堆排序">
-<meta name="twitter:description" content="堆排序顾名思义，是利用堆这种数据结构来进行排序的算法。 如果你不了解堆这种数据结构，可以查看小吴之前的数据结构系列文章—看动画轻松理解堆  如果你了解堆这种数据结构，你应该知道堆是一种优先队列，两种实现，最大堆和最小堆，由于我们这里排序按升序排，所以就直接以最大堆来说吧。 我们完全可以把堆（以下全都默认为最大堆）看成一棵完全二叉树，但是位于堆顶的元素总是整棵树的最大值，每个子节点的值都比父节点小，">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190708224140618.gif">
+<meta name="twitter:title" content="冒泡排序">
+<meta name="twitter:description" content="冒泡排序 冒泡排序无疑是最为出名的排序算法之一，从序列的一端开始往另一端冒泡（你可以从左往右冒泡，也可以从右往左冒泡，看心情），依次比较相邻的两个数的大小（到底是比大还是比小也看你心情）。 冒泡的代码还是相当简单的，两层循环，外层冒泡轮数，里层依次比较，江湖中人人尽皆知。 123456789101112public static void sort(int arr[])&amp;#123;    for(">
+<meta name="twitter:image" content=" https://user-images.githubusercontent.com/17243165/28749710-5213c280-7503-11e7-977e-7c0616e3b582.gif">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="https://martin3242017.github.io/2015/09/01/堆排序/">
+  <link rel="canonical" href="https://martin3242017.github.io/2017/09/01/冒泡排序/">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>堆排序 | WANKAI'S BLOG</title>
+  <title>冒泡排序 | WANKAI'S BLOG</title>
   
 
 
@@ -381,7 +381,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://martin3242017.github.io/2015/09/01/堆排序/">
+    <link itemprop="mainEntityOfPage" href="https://martin3242017.github.io/2017/09/01/冒泡排序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WANKAI">
@@ -398,7 +398,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">堆排序
+          <h1 class="post-title" itemprop="name headline">冒泡排序
 
               
             
@@ -423,7 +423,7 @@
                 
               
 
-              <time title="创建时间：2015-09-01 21:01:04" itemprop="dateCreated datePublished" datetime="2015-09-01T21:01:04+08:00">2015-09-01</time>
+              <time title="创建时间：2017-09-01 21:00:05" itemprop="dateCreated datePublished" datetime="2017-09-01T21:00:05+08:00">2017-09-01</time>
             </span>
           
 
@@ -456,8 +456,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2015/09/01/堆排序/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2015/09/01/堆排序/" itemprop="commentCount"></span>
+                <a href="/2017/09/01/冒泡排序/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/09/01/冒泡排序/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -496,16 +496,12 @@
       
 
       
-        <p>堆排序顾名思义，是利用堆这种数据结构来进行排序的算法。</p>
-<p>如果你不了解堆这种数据结构，可以查看小吴之前的数据结构系列文章—<a href="https://mp.weixin.qq.com/s?__biz=MzUyNjQxNjYyMg==&mid=2247484290&idx=1&sn=971ae3365a8a9d284e427e623d825bba&scene=21#wechat_redirect" target="_blank" rel="noopener">看动画轻松理解堆</a> </p>
-<p>如果你了解堆这种数据结构，你应该知道堆是一种优先队列，两种实现，最大堆和最小堆，由于我们这里排序按升序排，所以就直接以最大堆来说吧。</p>
-<p>我们完全可以把堆（以下全都默认为最大堆）看成一棵完全二叉树，但是位于堆顶的元素总是整棵树的最大值，每个子节点的值都比父节点小，由于堆要时刻保持这样的规则特性，所以一旦堆里面的数据发生变化，我们必须对堆重新进行一次构建。</p>
-<p>既然堆顶元素永远都是整棵树中的最大值，那么我们将数据构建成堆后，只需要从堆顶取元素不就好了吗？ 第一次取的元素，是否取的就是最大值？取完后把堆重新构建一下，然后再取堆顶的元素，是否取的就是第二大的值？ 反复的取，取出来的数据也就是有序的数据。</p>
-<img src="https://img-blog.csdnimg.cn/20190708224140618.gif">
+        <p><strong>冒泡排序</strong></p>
+<p>冒泡排序无疑是最为出名的排序算法之一，从序列的一端开始往另一端冒泡（你可以从左往右冒泡，也可以从右往左冒泡，看心情），依次比较相邻的两个数的大小（到底是比大还是比小也看你心情）。<br><img src=" https://user-images.githubusercontent.com/17243165/28749710-5213c280-7503-11e7-977e-7c0616e3b582.gif"></p>
+<p>冒泡的代码还是相当简单的，两层循环，外层冒泡轮数，里层依次比较，江湖中人人尽皆知。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span> arr[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; arr.length - <span class="number">1</span> ; i++ )&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; arr.length - <span class="number">1</span> - i ; j++)&#123;</span><br><span class="line">            <span class="keyword">int</span> temp = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span>(arr[j] &lt; arr[j + <span class="number">1</span>])&#123;</span><br><span class="line">                temp = arr[j];</span><br><span class="line">                arr[j] = arr[j + <span class="number">1</span>];</span><br><span class="line">                arr[j + <span class="number">1</span>] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = arr.length;</span><br><span class="line">    <span class="comment">//构建堆</span></span><br><span class="line">    buildHeap(arr， length);</span><br><span class="line">    <span class="keyword">for</span> ( <span class="keyword">int</span> i = length - <span class="number">1</span>; i &gt; <span class="number">0</span>; i-- ) &#123;</span><br><span class="line">        <span class="comment">//将堆顶元素与末位元素调换</span></span><br><span class="line">        <span class="keyword">int</span> temp = arr[<span class="number">0</span>];</span><br><span class="line">        arr[<span class="number">0</span>] = arr[i];</span><br><span class="line">        arr[i] = temp;</span><br><span class="line">        <span class="comment">//数组长度-1 隐藏堆尾元素</span></span><br><span class="line">        length--;</span><br><span class="line">        <span class="comment">//将堆顶元素下沉 目的是将最大的元素浮到堆顶来</span></span><br><span class="line">        sink(arr， <span class="number">0</span>， length);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">buildHeap</span><span class="params">(<span class="keyword">int</span>[] arr， <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = length / <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        sink(arr， i， length);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 下沉调整</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> arr 数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> index 调整位置</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> length 数组范围</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sink</span><span class="params">(<span class="keyword">int</span>[] arr， <span class="keyword">int</span> index， <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> leftChild = <span class="number">2</span> * index + <span class="number">1</span>;<span class="comment">//左子节点下标</span></span><br><span class="line">    <span class="keyword">int</span> rightChild = <span class="number">2</span> * index + <span class="number">2</span>;<span class="comment">//右子节点下标</span></span><br><span class="line">    <span class="keyword">int</span> present = index;<span class="comment">//要调整的节点下标</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//下沉左边</span></span><br><span class="line">    <span class="keyword">if</span> (leftChild &lt; length &amp;&amp; arr[leftChild] &gt; arr[present]) &#123;</span><br><span class="line">        present = leftChild;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//下沉右边</span></span><br><span class="line">    <span class="keyword">if</span> (rightChild &lt; length &amp;&amp; arr[rightChild] &gt; arr[present]) &#123;</span><br><span class="line">        present = rightChild;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果下标不相等 证明调换过了</span></span><br><span class="line">    <span class="keyword">if</span> (present != index) &#123;</span><br><span class="line">        <span class="comment">//交换值</span></span><br><span class="line">        <span class="keyword">int</span> temp = arr[index];</span><br><span class="line">        arr[index] = arr[present];</span><br><span class="line">        arr[present] = temp;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//继续下沉</span></span><br><span class="line">        sink(arr， present， length);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>堆排序和快速排序的时间复杂度都一样是 O(nlogn)</strong></p>
+<p>我们看到嵌套循环，应该立马就可以得出这个算法的时间复杂度为O(n2)。</p>
 
       
     </div>
@@ -576,7 +572,7 @@
           
             <a href="/tags/算法/" rel="tag"># 算法</a>
           
-            <a href="/tags/堆排序/" rel="tag"># 堆排序</a>
+            <a href="/tags/冒泡排序/" rel="tag"># 冒泡排序</a>
           
         </div>
       
@@ -589,8 +585,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/01/冒泡排序/" rel="next" title="冒泡排序">
-                <i class="fa fa-chevron-left"></i> 冒泡排序
+              <a href="/2017/09/01/Docker概览/" rel="next" title="Docker概览">
+                <i class="fa fa-chevron-left"></i> Docker概览
               </a>
             
           </div>
@@ -599,8 +595,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/02/希尔排序/" rel="prev" title="希尔排序">
-                希尔排序 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/01/堆排序/" rel="prev" title="堆排序">
+                堆排序 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -649,17 +645,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -917,23 +904,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">1.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

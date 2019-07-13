@@ -97,14 +97,14 @@
   <meta name="description" content="Redis本身是一个cs模式的tcp server, client可以通过一个socket连续发起多个请求命令。 每个请求命令发出后client通常会阻塞并等待redis服务端处理，redis服务端处理完后将结果返回给client。 由于我们知道Redis非常快，这种发送模式中的性能瓶颈其实在于请求传输速度，就算redis server端有很强的处理能力，也由于收到的client消息少，而造成吞吐">
 <meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Redis】pipeline管道打包处理模式">
+<meta property="og:title" content="【Redis】Pipeline管道打包处理模式">
 <meta property="og:url" content="https://martin3242017.github.io/2018/11/01/【Redis】Pipeline管道打包处理模式/index.html">
 <meta property="og:site_name" content="WANKAI&#39;S BLOG">
 <meta property="og:description" content="Redis本身是一个cs模式的tcp server, client可以通过一个socket连续发起多个请求命令。 每个请求命令发出后client通常会阻塞并等待redis服务端处理，redis服务端处理完后将结果返回给client。 由于我们知道Redis非常快，这种发送模式中的性能瓶颈其实在于请求传输速度，就算redis server端有很强的处理能力，也由于收到的client消息少，而造成吞吐">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-08T09:58:31.000Z">
+<meta property="og:updated_time" content="2019-07-13T09:39:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【Redis】pipeline管道打包处理模式">
+<meta name="twitter:title" content="【Redis】Pipeline管道打包处理模式">
 <meta name="twitter:description" content="Redis本身是一个cs模式的tcp server, client可以通过一个socket连续发起多个请求命令。 每个请求命令发出后client通常会阻塞并等待redis服务端处理，redis服务端处理完后将结果返回给client。 由于我们知道Redis非常快，这种发送模式中的性能瓶颈其实在于请求传输速度，就算redis server端有很强的处理能力，也由于收到的client消息少，而造成吞吐">
 
 
@@ -123,7 +123,7 @@
   };
 </script>
 
-  <title>【Redis】pipeline管道打包处理模式 | WANKAI'S BLOG</title>
+  <title>【Redis】Pipeline管道打包处理模式 | WANKAI'S BLOG</title>
   
 
 
@@ -396,7 +396,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">【Redis】pipeline管道打包处理模式
+          <h1 class="post-title" itemprop="name headline">【Redis】Pipeline管道打包处理模式
 
               
             

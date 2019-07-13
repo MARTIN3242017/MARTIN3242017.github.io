@@ -94,20 +94,18 @@
 
 
 
-  <meta name="description" content="思路首先，找到数组中最小的元素，拎出来，将它和数组的第一个元素交换位置，第二步，在剩下的元素中继续寻找最小的元素，拎出来，和数组的第二个元素交换位置，如此循环，直到整个数组排序完成。 至于选大还是选小，这个都无所谓，你也可以每次选择最大的拎出来排，也可以每次选择最小的拎出来的排，只要你的排序的手段是这种方式，都叫选择排序。代码实现 1234567891011121314public static">
-<meta name="keywords" content="算法,选择排序">
+  <meta name="description" content="预处理阶段预处理器（cpp）识别以#字符开头的指令 修改源程序，比如#iclude&amp;lt;stdio.h&amp;gt;告诉预处理器读取系统头文件stdio.h的内容并把它插入程序文本中就得到另一个C程序，以 .i 为文件扩展名 编译阶段编译器（ccl）将hello.i翻译成文本文件hello.s，它包含一个汇编程序，每条语句都以一种文本格式描述了一条低级的机器语言指令 汇编阶段接下来汇编器（as）将he">
+<meta name="keywords" content="计算机基础,读书笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="选择排序">
-<meta property="og:url" content="https://martin3242017.github.io/2015/09/02/选择排序/index.html">
+<meta property="og:title" content="《深入理解计算机系统》 day01">
+<meta property="og:url" content="https://martin3242017.github.io/2017/12/20/《深入理解计算机系统》 day01/index.html">
 <meta property="og:site_name" content="WANKAI&#39;S BLOG">
-<meta property="og:description" content="思路首先，找到数组中最小的元素，拎出来，将它和数组的第一个元素交换位置，第二步，在剩下的元素中继续寻找最小的元素，拎出来，和数组的第二个元素交换位置，如此循环，直到整个数组排序完成。 至于选大还是选小，这个都无所谓，你也可以每次选择最大的拎出来排，也可以每次选择最小的拎出来的排，只要你的排序的手段是这种方式，都叫选择排序。代码实现 1234567891011121314public static">
+<meta property="og:description" content="预处理阶段预处理器（cpp）识别以#字符开头的指令 修改源程序，比如#iclude&amp;lt;stdio.h&amp;gt;告诉预处理器读取系统头文件stdio.h的内容并把它插入程序文本中就得到另一个C程序，以 .i 为文件扩展名 编译阶段编译器（ccl）将hello.i翻译成文本文件hello.s，它包含一个汇编程序，每条语句都以一种文本格式描述了一条低级的机器语言指令 汇编阶段接下来汇编器（as）将he">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190708223952334.gif">
-<meta property="og:updated_time" content="2019-07-08T14:45:51.000Z">
+<meta property="og:updated_time" content="2019-07-13T10:29:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="选择排序">
-<meta name="twitter:description" content="思路首先，找到数组中最小的元素，拎出来，将它和数组的第一个元素交换位置，第二步，在剩下的元素中继续寻找最小的元素，拎出来，和数组的第二个元素交换位置，如此循环，直到整个数组排序完成。 至于选大还是选小，这个都无所谓，你也可以每次选择最大的拎出来排，也可以每次选择最小的拎出来的排，只要你的排序的手段是这种方式，都叫选择排序。代码实现 1234567891011121314public static">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190708223952334.gif">
+<meta name="twitter:title" content="《深入理解计算机系统》 day01">
+<meta name="twitter:description" content="预处理阶段预处理器（cpp）识别以#字符开头的指令 修改源程序，比如#iclude&amp;lt;stdio.h&amp;gt;告诉预处理器读取系统头文件stdio.h的内容并把它插入程序文本中就得到另一个C程序，以 .i 为文件扩展名 编译阶段编译器（ccl）将hello.i翻译成文本文件hello.s，它包含一个汇编程序，每条语句都以一种文本格式描述了一条低级的机器语言指令 汇编阶段接下来汇编器（as）将he">
 
 
 
@@ -115,7 +113,7 @@
 
   
   
-  <link rel="canonical" href="https://martin3242017.github.io/2015/09/02/选择排序/">
+  <link rel="canonical" href="https://martin3242017.github.io/2017/12/20/《深入理解计算机系统》 day01/">
 
 
 
@@ -125,7 +123,7 @@
   };
 </script>
 
-  <title>选择排序 | WANKAI'S BLOG</title>
+  <title>《深入理解计算机系统》 day01 | WANKAI'S BLOG</title>
   
 
 
@@ -381,7 +379,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://martin3242017.github.io/2015/09/02/选择排序/">
+    <link itemprop="mainEntityOfPage" href="https://martin3242017.github.io/2017/12/20/《深入理解计算机系统》 day01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WANKAI">
@@ -398,7 +396,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">选择排序
+          <h1 class="post-title" itemprop="name headline">《深入理解计算机系统》 day01
 
               
             
@@ -423,7 +421,7 @@
                 
               
 
-              <time title="创建时间：2015-09-02 21:10:05" itemprop="dateCreated datePublished" datetime="2015-09-02T21:10:05+08:00">2015-09-02</time>
+              <time title="创建时间：2017-12-20 22:12:35" itemprop="dateCreated datePublished" datetime="2017-12-20T22:12:35+08:00">2017-12-20</time>
             </span>
           
 
@@ -438,7 +436,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a></span>
 
                 
                 
@@ -456,8 +454,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2015/09/02/选择排序/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2015/09/02/选择排序/" itemprop="commentCount"></span>
+                <a href="/2017/12/20/《深入理解计算机系统》 day01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/12/20/《深入理解计算机系统》 day01/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -496,11 +494,10 @@
       
 
       
-        <p><strong>思路</strong><br>首先，找到数组中最小的元素，拎出来，将它和数组的第一个元素交换位置，第二步，在剩下的元素中继续寻找最小的元素，拎出来，和数组的第二个元素交换位置，如此循环，直到整个数组排序完成。</p>
-<p>至于选大还是选小，这个都无所谓，你也可以每次选择最大的拎出来排，也可以每次选择最小的拎出来的排，只要你的排序的手段是这种方式，都叫选择排序。<br><img src="https://img-blog.csdnimg.cn/20190708223952334.gif"><br><strong>代码实现</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span> arr[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span>;i &lt; arr.length ; i++ )&#123;</span><br><span class="line">        <span class="keyword">int</span> min = i;<span class="comment">//最小元素的下标</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = i + <span class="number">1</span>;j &lt; arr.length ; j++ )&#123;</span><br><span class="line">            <span class="keyword">if</span>(arr[j] &lt; arr[min])&#123;</span><br><span class="line">                min = j;<span class="comment">//找最小值</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//交换位置</span></span><br><span class="line">        <span class="keyword">int</span> temp = arr[i];</span><br><span class="line">        arr[i] = arr[min];</span><br><span class="line">        arr[min] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>双层循环，时间复杂度和冒泡一模一样，都是O(n2)。</strong></p>
+        <pre><code>预处理阶段</code></pre><p>预处理器（cpp）识别以#字符开头的指令 修改源程序，比如#iclude&lt;stdio.h&gt;告诉预处理器读取系统头文件stdio.h的内容并把它插入程序文本中就得到另一个C程序，以 .i 为文件扩展名</p>
+<pre><code>编译阶段</code></pre><p>编译器（ccl）将hello.i翻译成文本文件hello.s，它包含一个汇编程序，每条语句都以一种文本格式描述了一条低级的机器语言指令</p>
+<pre><code>汇编阶段</code></pre><p>接下来汇编器（as）将hello.s翻译成机器语言指令，并将结果打包在一个二进制文件 hello.o 中</p>
+<pre><code>链接阶段</code></pre><p>将程序中需要用到的函数，例如printf，从printf.o包中用链接器（ld）合并到hello.o程序中得到一个hello文件，加载到内存中交给系统执行。</p>
 
       
     </div>
@@ -569,9 +566,9 @@
         
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag"># 算法</a>
+            <a href="/tags/计算机基础/" rel="tag"># 计算机基础</a>
           
-            <a href="/tags/选择排序/" rel="tag"># 选择排序</a>
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
           
         </div>
       
@@ -584,8 +581,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/02/希尔排序/" rel="next" title="希尔排序">
-                <i class="fa fa-chevron-left"></i> 希尔排序
+              <a href="/2017/11/11/数据库事务的隔离级别/" rel="next" title="数据库事务的隔离级别">
+                <i class="fa fa-chevron-left"></i> 数据库事务的隔离级别
               </a>
             
           </div>
@@ -594,8 +591,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/12/20/《深入理解计算机系统》 day01/" rel="prev" title="《深入理解计算机系统》 day01">
-                《深入理解计算机系统》 day01 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/01/让 hexo 博客在后台跑起来/" rel="prev" title="让 hexo 博客在后台跑起来">
+                让 hexo 博客在后台跑起来 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
