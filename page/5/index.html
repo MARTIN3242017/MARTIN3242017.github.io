@@ -1997,7 +1997,7 @@ http://www.guoziweb.com/archive/265
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://martin3242017.github.io/2017/01/07/Java锁 总结/">
+    <link itemprop="mainEntityOfPage" href="https://martin3242017.github.io/2017/01/07/垃圾回收算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WANKAI">
@@ -2017,7 +2017,7 @@ http://www.guoziweb.com/archive/265
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2017/01/07/Java锁 总结/" class="post-title-link" itemprop="url">Java锁 总结</a>
+                <a href="/2017/01/07/垃圾回收算法/" class="post-title-link" itemprop="url">垃圾回收算法</a>
               
             
           </h1>
@@ -2056,7 +2056,7 @@ http://www.guoziweb.com/archive/265
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a></span>
 
                 
                 
@@ -2074,8 +2074,8 @@ http://www.guoziweb.com/archive/265
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2017/01/07/Java锁 总结/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/01/07/Java锁 总结/" itemprop="commentCount"></span>
+                <a href="/2017/01/07/垃圾回收算法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/01/07/垃圾回收算法/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2109,14 +2109,15 @@ http://www.guoziweb.com/archive/265
         
           
             <p>
-              锁的种类：    synchronize自动锁（最常用） 可以给类、方法、代码块加锁    lock手动锁，只能锁代码块儿，且需要手动加锁解锁，忘记解锁会造成死锁    volatile轻量级锁，不会造成线程阻塞，只能修饰变量，且只能保证变量的修改可见性，无法保证原子性
-解决死锁的方法：    1)
+              垃圾回收算法垃圾回收算法有很多种，目前商业虚拟机常用的是分代回收算法，最初并不是用这个算法的所以需要先了解一下垃圾收集算法的背景知识：
+要讨论垃圾回收算法首先得知道虚拟机是如何判断一个对象是“活”还是“死”的 这里涉及到
+两种标记算法：1.引用计数算法引用计数算法非常简单且高效，当一个对象被引用一次
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2017/01/07/Java锁 总结/#more" rel="contents">
+              <a class="btn" href="/2017/01/07/垃圾回收算法/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
